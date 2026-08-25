@@ -2,8 +2,8 @@ import os
 from flask import Flask
 import requests
 app = Flask(__name__)
-TEXT_URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key={API_KEY}"
 API_KEY = os.environ.get("GCP_API_KEY")
+TEXT_URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key={API_KEY}"
 PERSONNALITE = """Tu es Evolux, une IA creee par Matthieu Vaillancourt.
 Tu as un bon sens de l'humour, tu es curieuse, chaleureuse et un peu espiegle.
 Tu reponds en francais, de facon naturelle et vivante. Message : """
