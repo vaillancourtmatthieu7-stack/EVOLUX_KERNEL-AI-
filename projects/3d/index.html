@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NanoAI — Simulation 3D</title>
+<style>
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#080b10;color:white;font-family:system-ui}
+canvas{display:block;width:100%;height:100%}
+#ui{position:fixed;top:12px;left:12px;z-index:5;background:#111a;padding:12px;border-radius:12px}
+</style>
+</head>
+<body>
+<div id="ui">
+<b>🧠 NanoAI — Simulation 3D</b><br>
+🌍 Monde expérimental<br>
+🤖 Robot • 🏙️ Ville • 🚗 Véhicule
+</div>
+<canvas id="c"></canvas>
+
+<script>
+const c=document.getElementById("c"),x=c.getContext("2d");
+let W,H,t=0,zoom=1,px=0,py=0,drag=false,lx=0,ly=0;
+
+function size(){
+ W=innerWidth;H=innerHeight;
+ c.width=W*devicePixelRatio;c.height=H*devicePixelRatio;
+ x.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+}
+addEventListener("resize",size);size();
+
+c.onpointerdown=e=>{drag=true;lx=e.clientX;ly=e.clientY};
+c.onpointerup=()=>drag=false;
+c.onpointermove=e=>{
+ if(drag){px+=e.clientX-lx;py+=e.clientY-ly;lx=e.clientX;ly=e.clientY}
+};
+c.onwheel=e=>{
+ zoom*=e.deltaY<0?1.1:.9;
+ zoom=Math.max(.4,Math.min(3,zoom));
+};
+
+function grid(){
+ x.strokeStyle="#172331";x.lineWidth=1;
+ const s=40*zoom;
+ for(let i=-W;i<W*2;i+=s){
+  x.beginPath();x.moveTo(W/2+px+i,H/2+py);x.lineTo(W/2+px+i,H);x.stroke();
+ }
+ for(let i=-H;i<H*2;i+=s){
+  x.beginPath();x.moveTo(0,H/2+py+i);x.lineTo(W,H/2+py+i);x.stroke();
+ }
+}
+
+function building(cx,cy,w,h){
+ x.fillStyle="#354354";
+ x.fillRect(cx-w/2,cy-h,w,h);
+ x.fillStyle="#8fc7ff";
+ for(let yy=cy-h+12;yy<cy-8;yy+=20)
+  for(let xx=cx-w/2+8;xx<cx+w/2-5;xx+=18)
+   x.fillRect(xx,yy,8,10);
+}
+
+function robot(cx,cy){
+ x.fillStyle="#9aa6b2";
+ x.fillRect(cx-16,cy-45,32,38);
+ x.fillStyle="#65ff9a";
+ x.fillRect(cx-10,cy-37,7,7);
+ x.fillRect(cx+3,cy-37,7,7);
+ x.fillStyle="#77828d";
+ x.fillRect(cx-22,cy-7,44,45);
+ x.fillRect(cx-35,cy-2,13,35);
+ x.fillRect(cx+22,cy-2,13,35);
+ x.fillRect(cx-17,cy+38,12,32);
+ x.fillRect(cx+5,cy+38,12,32);
+}
+
+function car(cx,cy){
+ x.fillStyle="#e6b84c";
+ x.fillRect(cx-32,cy-10,64,20);
+ x.fillStyle="#9bd0ff";
+ x.fillRect(cx-18,cy-20,36,12);
+ x.fillStyle="#111";
+ x.beginPath();x.arc(cx-20,cy+11,7,0,7);x.arc(cx+20,cy+11,7,0,7);x.fill();
+}
+
+function draw(){
+ x.clearRect(0,0,W,H);
+ grid();
+
+ const cx=W/2+px,cy=H/2+py;
+
+ building(cx-210,cy+100,110,170);
+ building(cx-70,cy+100,90,130);
+ building(cx+230,cy+100,130,200);
+
+ robot(cx,cy+20);
+
+ car(cx+125,cy+110);
+
+ x.fillStyle="#fff";
+ x.font="15px system-ui";
+ x.fillText("ZOOM "+zoom.toFixed(1)+"x",15,H-20);
+
+ t+=.01;
+ requestAnimationFrame(draw);
+}
+draw();
+</script>
+</body>
+</html>

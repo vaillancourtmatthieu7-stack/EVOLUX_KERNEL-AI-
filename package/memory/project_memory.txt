@@ -1,0 +1,27 @@
+PROJET NANOAI
+
+Objectif général :
+Construire un agent IA local fonctionnant sur Android.
+
+Architecture souhaitée :
+LLM local
+Mémoire persistante
+Agent de raisonnement
+Génération de code
+Sandbox de test
+Accès Web contrôlé
+Git/GitHub
+Génération de simulations 3D
+Interface Android
+Gestion de projets
+
+Matériel actuel :
+Android ARM64
+RAM totale observée : environ 3,6 GiB
+Stockage disponible : environ 30 Go
+Modèle actuel : Qwen3-1.7B-Q4_K_M
+Moteur : llama.cpp
+Contexte initial : 2048 tokens
+
+Priorité :
+Construire progressivement, tester chaque module et conserver les fichiers.

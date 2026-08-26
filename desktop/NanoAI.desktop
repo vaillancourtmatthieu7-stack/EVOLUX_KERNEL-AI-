@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=NanoAI
+Comment=NanoAI Local Engineering Assistant
+Exec=termux-open-url http://127.0.0.1:8787
+Terminal=false
+Type=Application
