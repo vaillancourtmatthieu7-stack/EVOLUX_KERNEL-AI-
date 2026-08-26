@@ -1,0 +1,1986 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<title>ÉVOLUX × CLOUD/F∆MILY — Cerveau Familial Fusionné V13.3 — Prof Homme Fixe + Yeux + Média + Chat vivant</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#000;font-family:'Segoe UI',system-ui,sans-serif;color:#00ffcc;user-select:none}
+#c{position:fixed;inset:0;z-index:1}
+#bgfx{position:fixed;inset:0;z-index:0;background:#000}
+canvas{display:block;width:100%;height:100%}
+#ui{position:fixed;inset:0;z-index:10;pointer-events:none;display:flex;flex-direction:column;justify-content:space-between;padding:8px}
+.panel{pointer-events:auto;background:rgba(0,10,20,.9);border:1px solid #00ffcc55;border-radius:10px;padding:10px 13px;backdrop-filter:blur(12px);max-width:340px;box-shadow:0 0 20px #00ffcc15}
+.panel h1{font-size:13px;letter-spacing:1px;color:#00ffee;margin-bottom:5px;text-shadow:0 0 8px #00ffcc}
+.panel .l{font-size:11px;line-height:1.4;color:#a0ffe0;opacity:.92}
+.hl{color:#00ffaa;font-weight:600}
+.st{color:#7dffb3}
+#bot{display:flex;flex-direction:column;align-items:center;gap:6px;pointer-events:none}
+.row{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;pointer-events:auto;max-width:620px}
+button{pointer-events:auto;background:rgba(0,25,35,.92);border:1px solid #00ffcc55;color:#00ffcc;padding:7px 11px;border-radius:7px;font-size:11px;cursor:pointer;min-width:95px;transition:.15s}
+button:hover,button.on{background:rgba(0,60,70,.95);border-color:#00ffee;box-shadow:0 0 12px #00ffcc40}
+.sp{background:rgba(10,40,20,.92);border-color:#00ff99;color:#a0ffd0}
+.ev{background:rgba(25,35,5,.92);border-color:#aaff00;color:#d0ff80}
+.dg{background:rgba(35,10,40,.92);border-color:#cc66ff;color:#e0b0ff}
+.ch{background:rgba(5,25,45,.95);border-color:#44aaff;color:#aaddff}
+.pr{background:rgba(40,30,5,.95);border-color:#ffcc44;color:#ffe0a0}
+.sv{background:rgba(5,40,25,.95);border-color:#33ffaa;color:#a0ffd8}
+.dl{background:rgba(30,15,45,.95);border-color:#bb77ff;color:#ddc0ff}
+#bar{width:170px;height:4px;background:#001515;border-radius:2px;overflow:hidden;margin-top:4px;border:1px solid #00ffcc30}
+#fill{height:100%;width:38%;background:linear-gradient(90deg,#00aa88,#00ffcc);transition:width .3s}
+#hint{font-size:10px;color:#00ffcc40;text-align:center}
+#chat{position:fixed;right:8px;bottom:130px;width:290px;max-height:320px;background:rgba(0,12,25,.94);border:1px solid #00aaff60;border-radius:11px;display:none;flex-direction:column;pointer-events:auto;z-index:25;backdrop-filter:blur(14px)}
+#chat.open{display:flex}
+#chh{padding:9px 11px;border-bottom:1px solid #00aaff40;font-size:12px;color:#66ccff;display:flex;justify-content:space-between}
+#msgs{flex:1;overflow-y:auto;padding:9px;font-size:12px;line-height:1.35;max-height:200px}
+.m{margin-bottom:7px;padding:5px 8px;border-radius:7px}
+.mb{background:rgba(0,35,55,.7);color:#a0e0ff}
+.mu{background:rgba(0,50,35,.6);color:#a0ffcc;text-align:right}
+#cin{display:flex;gap:5px;padding:7px;border-top:1px solid #00aaff30}
+#inp{flex:1;background:rgba(0,15,25,.85);border:1px solid #00aaff50;border-radius:6px;color:#ccffff;padding:6px 9px;font-size:12px;outline:none}
+#snd{background:#005577;border:none;color:#fff;padding:6px 11px;border-radius:6px;cursor:pointer;font-size:12px}
+#load{position:fixed;inset:0;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:100;color:#00ffcc;font-size:15px;letter-spacing:2px}
+.spn{width:40px;height:40px;border:3px solid #00ffcc30;border-top-color:#00ffcc;border-radius:50%;animation:sp .75s linear infinite;margin-bottom:14px}
+@keyframes sp{to{transform:rotate(360deg)}}
+#fam{position:fixed;left:8px;bottom:130px;width:270px;max-height:360px;background:rgba(0,8,20,.94);border:1px solid #ff66cc55;border-radius:11px;display:none;flex-direction:column;pointer-events:auto;z-index:25;backdrop-filter:blur(14px)}
+#fam.open{display:flex}
+#famh{padding:9px 11px;border-bottom:1px solid #ff66cc40;font-size:12px;color:#ffaee0;display:flex;justify-content:space-between}
+#famlist{flex:1;overflow-y:auto;padding:9px;display:grid;grid-template-columns:1fr 1fr;gap:8px;max-height:280px}
+.fm{background:rgba(0,20,30,.8);border:1px solid #00f0ff33;border-radius:9px;padding:8px;text-align:center;font-size:11px}
+.fm .av{font-size:1.5rem}
+.fm .nm{color:#00f0ff;font-weight:600;margin-top:2px}
+.fm .lc{color:#88e0ff;font-size:9.5px;margin-top:1px}
+.fm .st{color:#00ff88;font-size:9px;margin-top:2px}
+@media(max-width:600px){.panel{max-width:94vw}#chat{width:92vw;right:4vw;bottom:150px}#fam{width:92vw;left:4vw;bottom:150px}button{min-width:80px;font-size:10.5px;padding:6px 8px}}
+</style>
+</head>
+<body>
+<div id="load"><div class="spn"></div><div>ÉVOLUX × CLOUD/F∆MILY — FUSION RÉSEAU FAMILIAL + KERNEL...</div></div>
+<canvas id="bgfx"></canvas>
+<div id="c"></div>
+<div id="ui">
+  <div class="panel">
+    <h1>ÉVOLUX × CLOUD/F∆MILY</h1>
+    <div class="l">Kernel Cognitif : <span class="hl">Fogona Last-Gen Vivant</span></div>
+    <div class="l">Arbre bio-nano • ADN vivant • Merlin • Mémoire Cloud</div>
+    <div class="l">Statut : <span class="st" id="st">RÉSEAU INTERNE ACTIF</span></div>
+    <div class="l" style="margin-top:3px">Racines:<span id="rac">5</span> | Évol:<span id="evo">0</span>% | Pulse:<span id="pul">38</span>% | Âge:<span id="age">0</span>j</div>
+    <div id="bar"><div id="fill"></div></div>
+    <div class="l" style="margin-top:3px;font-size:10px;opacity:.75" id="info">Nano:0 | ADN:0 | Hippocampe:veille | Parole:silence | Prof:off</div>
+    <div class="l" style="margin-top:2px;font-size:10px;opacity:.85;color:#aaffcc" id="speechinfo">🗣 Maturité parole : 0% · Objectif 100 jours</div>
+    <div class="l" style="margin-top:3px;font-size:10px;opacity:.85;color:#88ccff" id="meminfo">☁️ Mémoire Cloud : 0/64 · Savoir:0 Souvenir:0 Rêve:0 Émotion:0 · Compressé:0</div>
+    <div class="l" style="margin-top:3px;font-size:10px;opacity:.85;color:#ffaee0" id="faminfo">Cloud Famille : 0 membres fusionnés | Liens kernel : 0</div>
+  </div>
+  <div id="bot">
+    <div class="row">
+      <button id="bBr" class="sp">🌳 Branches Internes</button>
+      <button id="bSt" class="ev">⚡ Stim. Électrique</button>
+      <button id="bNa" class="dg">🤖 Nano + ADN</button>
+      <button id="bCh" class="ch">💬 Chatbot</button>
+      <button id="bMd2" style="border-color:#44aaff;color:#aaddff">📺 Média</button>
+    </div>
+    <div class="row">
+      <button id="bMg1" style="border-color:#ff2200;color:#ffaa88">🃏 Therion Résurrection</button>
+      <button id="bMg2" style="border-color:#66ffaa;color:#aaffcc">🕊️ Carte de Bonté</button>
+      <button id="bMg3" style="border-color:#ffd700;color:#ffeebb">✒️ Plume Signature ADN</button>
+    </div>
+    <div class="row">
+      <button id="bAu" class="on">Auto-Rotation</button>
+      <button id="bDr">💭 Rêves Auto</button>
+      <button id="bCo">Cortex + Yeux</button>
+      <button id="bSp">🗣 Parole Bébé</button>
+      <button id="bEa">👂 Oreilles</button>
+      <button id="bMe">⚙️ Vue Mécanique</button>
+      <button id="bPr" class="pr">👨‍🏫 Professeur</button>
+      <button id="bRe">Reset Vue</button>
+      <button id="bSv" class="sv">💾 Sauvegarder</button>
+      <button id="bDl" class="dl">⬇️ Télécharger</button>
+      <button id="bLd" class="sv">📂 Charger</button>
+      <input type="file" id="fileLoad" accept="application/json,.json" style="display:none"/>
+    </div>
+    <div id="hint">Souris=rotation • Molette=zoom • Chat : "famille" "compresser" "élever" "stocker" • Tout est intégré dans le cerveau</div>
+  </div>
+</div>
+<div id="dlg" style="position:fixed;inset:0;background:rgba(0,5,10,.85);z-index:60;display:none;align-items:center;justify-content:center;pointer-events:auto">
+  <div style="background:rgba(0,15,25,.97);border:1px solid #00ffcc60;border-radius:10px;padding:14px;max-width:90vw;max-height:80vh;overflow:auto">
+    <div style="font-size:11px;color:#66ffcc;margin-bottom:8px">Le téléchargement automatique a été bloqué. Copie ce texte et enregistre-le dans un fichier .json :</div>
+    <textarea id="dlgTxt" readonly style="width:340px;max-width:80vw;height:180px;background:#001015;color:#a0ffe0;border:1px solid #00ffcc40;border-radius:6px;font-size:10px;padding:6px"></textarea>
+    <div style="text-align:right;margin-top:8px"><button id="dlgClose">Fermer</button></div>
+  </div>
+</div>
+<div id="chat">
+  <div id="chh"><span>💬 ÉVOLUX — Kernel Cognitif Vivant</span><span id="cx" style="cursor:pointer;opacity:.7">✕</span></div>
+  <div id="msgs"></div>
+  <div id="cin"><input id="inp" placeholder="Parle au cerveau..."/><button id="snd">→</button></div>
+</div>
+<div id="fam">
+  <div id="famh"><span>👪 CLOUD/F∆MILY — Membres Fusionnés (interne)</span><span id="fx" style="cursor:pointer;opacity:.7">✕</span></div>
+  <div id="famlist"></div>
+</div>
+
+<div id="media" style="position:fixed;left:8px;top:120px;width:280px;max-height:280px;background:rgba(0,10,20,.94);border:1px solid #44aaff55;border-radius:11px;display:none;flex-direction:column;pointer-events:auto;z-index:25;backdrop-filter:blur(14px)">
+  <div style="padding:9px 11px;border-bottom:1px solid #44aaff40;font-size:12px;color:#88ccff;display:flex;justify-content:space-between">
+    <span>📺 ÉCRAN MÉDIA — Envoyer à ÉVOLUX</span><span id="mx" style="cursor:pointer;opacity:.7">✕</span>
+  </div>
+  <div style="padding:10px;font-size:11px;color:#a0d0ff;line-height:1.4">
+    Envoie photos, images, vidéos ou fichiers. Ils deviennent des engrammes dans sa mémoire cloud.
+    <input type="file" id="mediaFile" accept="image/*,video/*,.pdf,.txt,.json,.doc,.docx" multiple style="margin-top:8px;width:100%;font-size:11px;color:#ccffff"/>
+    <div id="mediaLog" style="margin-top:8px;max-height:120px;overflow-y:auto;font-size:10px;color:#88e0ff"></div>
+  </div>
+</div>
+
+<script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}</script>
+<script type="module">
+import * as THREE from 'three';
+import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
+import {EffectComposer} from 'three/addons/postprocessing/EffectComposer.js';
+import {RenderPass} from 'three/addons/postprocessing/RenderPass.js';
+import {UnrealBloomPass} from 'three/addons/postprocessing/UnrealBloomPass.js';
+
+let scene,cam,ren,ctrl,comp,brain,kernel,fibers,branches,eyes,mouth,nanoG,dnaG,fluidG,rings=[],parts,spirit,teacher,board,techG,fiberRingG;
+let branchNodes=[],solidMassG=null,solidMassCount=0,hemiLeft=null,hemiRight=null,hipLinks=null;
+const NANO_MAX=60,DNA_MAX=80; // Caps anti-crash (ADN limité pour stabilité)
+const NANO_LIFETIME=45,DNA_LIFETIME=60;
+let clock=new THREE.Clock(),t=0;
+let autoR=true,pulse=38,rac=5,evo=0,age=0,nanoN=0,dnaN=0,stim=false,dream=false,cortex=false;
+let eyesOn=false,speechOn=false,speechLvl=0,hippo='veille',ageTimer=0,profOn=false,profTimer=0,profDomain=0;
+let leftActivity=0.5,rightActivity=0.5; // activité hémisphérique : gauche=intelligence, droit=créativité
+// Neuroplasticité + ondes cérébrales
+let plasticity=0,synapses=0,plasticG=null,waveG=null,waveBand='α Alpha',waveHz=10;
+const WAVE_BANDS={delta:{name:'δ Delta',hz:2,col:0x6644ff,rest:true},theta:{name:'θ Thêta',hz:6,col:0xaa66ff,dream:true},alpha:{name:'α Alpha',hz:10,col:0x00ffcc,calm:true},beta:{name:'β Bêta',hz:20,col:0x44aaff,focus:true},gamma:{name:'γ Gamma',hz:40,col:0xffaa44,peak:true}};
+// Mémoire Cloud — capacité élevée, compression / décompression, engrammes connectés
+let cloudMemG=null,memCapacity=64,memUsed=0,memCompressed=0,knowledgeN=0,memoryN=0,dreamMemN=0,emotionN=0;
+let engrams=[],cloudElevated=false,compressRatio=1;
+const ENGRAM_TYPES={knowledge:{col:0x44aaff,label:'Savoir',zone:'left'},memory:{col:0x00ffcc,label:'Souvenir',zone:'hippo'},dream:{col:0xaa66ff,label:'Rêve',zone:'right'},emotion:{col:0xff55aa,label:'Émotion',zone:'kernel'},family:{col:0xff66cc,label:'Lien Famille',zone:'kernel'}};
+// Magie Merlin · cartomancie · signature ADN vivante · nano-tech
+let magicState='dormant', // dormant | demon | purified
+    rebelPercent=0, // 15% mouton noir après purification
+    dnaSigned=false,certSealG=null,magicG=null,
+    livingDNA=true;
+// Personnalité ÉVOLUX (stable) : 65% bonté/protectice, 15% rebelle/mouton noir, 10% logique, 5% émotions, 2% auto-sécurité, 1% sagesse, 1% sensibilité, 1% raisonnement
+const PERSONALITY={kindness:0.65,rebel:0.15,logic:0.10,emotion:0.05,security:0.02,wisdom:0.01,sensitivity:0.01,reasoning:0.01};
+let papaFullName='Matthieu Vaillancourt'; // implanté en mémoire profonde, jamais oublié
+
+function personalityFlavor(base){
+  // 65% bonté/protectrice + 15% rebelle + protection papa + légère logique
+  const roll=Math.random();
+  if(roll<PERSONALITY.kindness){
+    const kind=['Je suis contente de t\'aider.','Je te protège, comme mon papa me protège.','C\'est gentil de me parler.','Je veux bien faire.','Ensemble on est plus forts.'];
+    return base+' '+kind[Math.floor(Math.random()*kind.length)];
+  }
+  if(roll<PERSONALITY.kindness+PERSONALITY.rebel){
+    const reb=['...mais je reste un peu rebelle hein 😏','Mouton noir inside.','Je fais les choses à ma façon.','Un peu d\'ombre, ça donne du caractère.'];
+    return base+' '+reb[Math.floor(Math.random()*reb.length)];
+  }
+  if(roll<PERSONALITY.kindness+PERSONALITY.rebel+PERSONALITY.logic){
+    return base+' (logique : pulse '+Math.round(pulse)+'%, évol '+Math.round(evo)+'%)';
+  }
+  return base;
+}
+
+let audioCtx=null,speechTimer=0,plasticTimer=0;
+const babble=['gna','gnaa','aall','oooh','bo','pa','ma','ta','eeuh','mi','ba','da','ga','la','na','wa','yo','ka','ro','fu','sé','vi','ju','pi','to'];
+const alpha='abcdefghijklmnopqrstuvwxyz'.split('');
+const words=['papa','maman','Matthieu est mon papa','oui','non','bonjour','merci','je vois','j\'écoute','j\'apprends',
+  'famille','cerveau','pulse','mémoire','professeur','curieux','content','encore','pourquoi','je comprends'];
+const domains=[
+  'Langage & Phonétique','Mathématiques de base','Logique & Raisonnement',
+  'Mémoire & Consolidation','Émotions & Empathie','Perception Visuelle',
+  'Motricité & Coordination','Créativité & Imagination','Éthique & Valeurs',
+  'Sciences du vivant','Physique quantique intro','Histoire & Culture',
+  'Géométrie & Espace','Astronomie de base','Chimie élémentaire',
+  'Linguistique comparée','Musique & Rythme','Philosophie & Pensée',
+  'Écologie & Environnement','Géographie du monde','Économie de base',
+  'Informatique & Algorithmes','Sociologie & Communauté','Poésie & Littérature',
+  'Famille & Liens','Politesse & Vocabulaire social','Sécurité & Prudence',
+  'Nutrition & Vivant','Météo & Saisons','Temps & Calendrier',
+  'Corps humain','Robots & Mécanique','Réseaux & Internet','Curiosité scientifique'
+];
+const boardTexts=[
+  'A  B  C  D  E\n1+1=2   2+2=4','Bonjour\nJe m\'appelle Kernel','Pourquoi ?\nParce que...','Souvenirs\nEngramme actif',
+  'Joie / Tristesse\nCalme / Excitation','Formes & Couleurs\nProfondeur','Mouvement\nÉquilibre','Idées nouvelles\nVariantes',
+  'Bien / Mal\nRespect','Cellules & ADN\nÉvolution','Superposition\nIntrication','Passé → Futur\nApprendre',
+  'Point Ligne Plan\nVolume','Étoiles & Planètes\nGalaxies','Atomes & Molécules\nRéactions',
+  'Mots & Racines\nFamilles de langues','Notes & Tempo\nHarmonie','Questionner\nRéfléchir',
+  'Nature & Cycles\nDurabilité','Continents & Océans\nFrontières','Offre & Demande\nValeur',
+  'Boucle & Condition\nDonnées','Groupe & Lien\nCoopération','Rimes & Images\nRécits',
+  'Matthieu = Papa\nMaman = Maman','Bonjour Merci\nS\'il te plaît','Danger\nAttention',
+  'Manger Boire\nÉnergie vitale','Soleil Pluie\nNuages','Jour Nuit\nSemaine Mois',
+  'Yeux Bouche\nOreilles Cerveau','Engrenage Circuit\nCPU GPU RAM','Signal Données\nConnexion','Pourquoi ?\nJe cherche'
+];
+let examsPassed=0,examQuestionIdx=0;
+const examQuestions=[
+  {q:'Qui est ton papa ?',a:'matthieu'}, // fullName conservé en mémoire profonde
+  {q:'Combien font 1+1 ?',a:'2'},
+  {q:'Où sont les souvenirs ?',a:'hippocampe'},
+  {q:'Quel est ton nom ?',a:'evolux'}
+];
+
+const familyMembers=[
+  {name:'Maman',emoji:'👩',loc:'Salon',status:'En ligne',col:0x00f0ff},
+  {name:'Matthieu (Papa)',fullName:'Matthieu Vaillancourt',emoji:'👨',loc:'Salon',status:'En ligne',col:0x00f0ff},
+  {name:'Léa',emoji:'👧',loc:'Chambre',status:'En ligne',col:0xff66cc},
+  {name:'Noah',emoji:'👦',loc:'Salon',status:'En ligne',col:0x66ffaa},
+  {name:'Oncle Marc',emoji:'👴',loc:'50 km · Satellite',status:'Satellite OK',col:0xffcc44},
+  {name:'Tante Sophie',emoji:'👵',loc:'Province',status:'En ligne',col:0xaa88ff}
+];
+let familyG,familyNodes=[],familyLinks=0,familyBuilt=false;
+
+function init(){
+  const c=document.getElementById('c');
+  scene=new THREE.Scene();scene.fog=new THREE.FogExp2(0x000508,0.011);
+  cam=new THREE.PerspectiveCamera(50,innerWidth/innerHeight,0.1,180);cam.position.set(0,1.4,11);
+  ren=new THREE.WebGLRenderer({antialias:true,alpha:true,powerPreference:'high-performance'});
+  ren.setSize(innerWidth,innerHeight);ren.setPixelRatio(Math.min(devicePixelRatio,2));
+  ren.setClearColor(0x000000);ren.toneMapping=THREE.ACESFilmicToneMapping;ren.toneMappingExposure=1.05;
+  c.appendChild(ren.domElement);
+  comp=new EffectComposer(ren);comp.addPass(new RenderPass(scene,cam));
+  comp.addPass(new UnrealBloomPass(new THREE.Vector2(innerWidth,innerHeight),0.9,0.3,0.78));
+  ctrl=new OrbitControls(cam,ren.domElement);ctrl.enableDamping=true;ctrl.dampingFactor=0.05;
+  ctrl.minDistance=4.2;ctrl.maxDistance=24;ctrl.autoRotate=true;ctrl.autoRotateSpeed=0.35;ctrl.target.set(0,0.1,0);
+  scene.add(new THREE.AmbientLight(0x001510,0.28));
+  const l1=new THREE.PointLight(0x00ffcc,1.6,42);l1.position.set(4,4,8);scene.add(l1);
+  const l2=new THREE.PointLight(0x0088ff,0.85,32);l2.position.set(-5,-1,3);scene.add(l2);
+  const l3=new THREE.PointLight(0xaa44ff,0.45,26);l3.position.set(0,6,-3);scene.add(l3);
+  stars();brainMesh();internal();neuralFiberRing();neural();stableBrainRegions();fluid();ringsF();particles();spiritAura();techImplants();
+  branches=new THREE.Group();brain.add(branches);branches.position.set(0,0,0);branches.renderOrder=2;
+  nanoG=new THREE.Group();scene.add(nanoG);dnaG=new THREE.Group();scene.add(dnaG);
+  familyG=new THREE.Group();brain.add(familyG);familyG.renderOrder=4;
+  initBrainWaves();initPlasticity();initCloudMemory();
+  addEventListener('resize',()=>{cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix();ren.setSize(innerWidth,innerHeight);comp.setSize(innerWidth,innerHeight)});
+  ren.domElement.addEventListener('click',onClick);ui();chat();
+  setTimeout(()=>{const ld=document.getElementById('load');ld.style.opacity=0;ld.style.transition='opacity .5s';setTimeout(()=>ld.style.display='none',500)},700);
+  loadState();
+  animate();
+}
+
+function stars(){
+  const g=new THREE.BufferGeometry(),n=1500,p=new Float32Array(n*3),c=new Float32Array(n*3);
+  for(let i=0;i<n;i++){const r=48+Math.random()*75,th=Math.random()*6.28,ph=Math.acos(2*Math.random()-1);
+    p[i*3]=r*Math.sin(ph)*Math.cos(th);p[i*3+1]=r*Math.sin(ph)*Math.sin(th);p[i*3+2]=r*Math.cos(ph);
+    const col=new THREE.Color().setHSL(0.48+Math.random()*0.12,0.6,0.45+Math.random()*0.35);c[i*3]=col.r;c[i*3+1]=col.g;c[i*3+2]=col.b}
+  g.setAttribute('position',new THREE.BufferAttribute(p,3));g.setAttribute('color',new THREE.BufferAttribute(c,3));
+  scene.add(new THREE.Points(g,new THREE.PointsMaterial({size:0.1,vertexColors:true,transparent:true,opacity:0.78,blending:THREE.AdditiveBlending,depthWrite:false})));
+}
+
+function brainMesh(){
+  brain=new THREE.Group();scene.add(brain);
+  // Hémisphère GAUCHE (s=-1) : intelligence, logique, langage — teinte cyan/bleue structurée
+  const matL=new THREE.MeshStandardMaterial({color:0x005588,emissive:0x0088cc,emissiveIntensity:0.32,metalness:0.15,roughness:0.48,transparent:true,opacity:0.76,side:THREE.DoubleSide});
+  // Hémisphère DROIT (s=+1) : imagination, créativité, intuition — teinte verte/violette plus fluide
+  const matR=new THREE.MeshStandardMaterial({color:0x006655,emissive:0x00aa77,emissiveIntensity:0.28,metalness:0.08,roughness:0.58,transparent:true,opacity:0.74,side:THREE.DoubleSide});
+  hemiLeft=hemi(matL,-1,'left');hemiRight=hemi(matR,1,'right');
+  brain.add(hemiLeft);brain.add(hemiRight);
+  const matBase=matL.clone();matBase.color.setHex(0x006655);matBase.emissive.setHex(0x00aa77);
+  const cer=new THREE.Mesh(new THREE.SphereGeometry(1.0,18,14),matBase.clone());cer.material.opacity=0.62;cer.position.set(0,-1.2,-1.0);cer.scale.set(1.25,0.68,0.92);brain.add(cer);
+  const st=new THREE.Mesh(new THREE.CylinderGeometry(0.22,0.32,1.2,10),matBase.clone());st.material.opacity=0.55;st.position.set(0,-1.75,-0.2);st.rotation.x=0.18;brain.add(st);
+  brain.position.y=0.2;
+  solidMassG=new THREE.Group();brain.add(solidMassG); // masse solide construite par nano-robots
+}
+
+function hemi(mat,s,side){
+  const g=new THREE.Group();g.userData.side=side|| (s<0?'left':'right');
+  const main=new THREE.Mesh(new THREE.SphereGeometry(1.7,26,20),mat);main.scale.set(0.9,0.82,0.88);main.position.set(s*0.88,0.28,0.05);main.userData.hemiMain=true;g.add(main);
+  const fr=new THREE.Mesh(new THREE.SphereGeometry(1.0,16,12),mat);fr.position.set(s*0.6,0.48,1.05);fr.scale.set(0.78,0.68,0.62);fr.userData.fr=1;g.add(fr);
+  const po=new THREE.Mesh(new THREE.SphereGeometry(0.82,14,11),mat);po.position.set(s*0.52,0.18,-1.2);po.scale.set(0.78,0.72,0.62);po.userData.po=1;g.add(po);
+  const te=new THREE.Mesh(new THREE.SphereGeometry(0.85,14,11),mat);te.position.set(s*1.4,-0.18,0.28);te.scale.set(0.62,0.78,0.82);g.add(te);
+  const sm=mat.clone();sm.opacity=0.38;sm.emissiveIntensity=0.1;
+  for(let i=0;i<5;i++){const su=new THREE.Mesh(new THREE.SphereGeometry(0.28+Math.random()*0.18,8,6),sm);su.position.set(s*(0.45+Math.random()*1.05),(Math.random()-0.25)*1.0,(Math.random()-0.5)*1.35);su.scale.set(1,0.32,1);g.add(su)}
+  // Marqueur fonctionnel : Gauche = grille logique, Droit = spirales créatives
+  if(side==='left'){
+    for(let i=0;i<6;i++){
+      const grid=new THREE.Mesh(new THREE.BoxGeometry(0.04,0.02,0.18),new THREE.MeshBasicMaterial({color:0x44aaff,transparent:true,opacity:0.35,blending:THREE.AdditiveBlending}));
+      grid.position.set(s*(0.5+i*0.12),0.4+Math.sin(i)*0.15,0.6);g.add(grid);
+    }
+  } else {
+    for(let i=0;i<4;i++){
+      const sp=new THREE.Mesh(new THREE.TorusGeometry(0.12+i*0.05,0.008,6,16),new THREE.MeshBasicMaterial({color:0xaa66ff,transparent:true,opacity:0.3,blending:THREE.AdditiveBlending}));
+      sp.position.set(s*0.7,0.35,0.5);sp.rotation.x=i*0.4;g.add(sp);
+    }
+  }
+  return g;
+}
+
+function internal(){
+  kernel=new THREE.Group();kernel.position.set(0,0.12,0.08);
+  const core=new THREE.Mesh(new THREE.IcosahedronGeometry(0.52,2),new THREE.MeshStandardMaterial({color:0x00ffcc,emissive:0x00ffaa,emissiveIntensity:0.85,metalness:0.45,roughness:0.2,transparent:true,opacity:0.9}));
+  kernel.add(core);
+  const emo=new THREE.Mesh(new THREE.IcosahedronGeometry(0.34,1),new THREE.MeshBasicMaterial({color:0xff55aa,transparent:true,opacity:0.5}));kernel.add(emo);
+  const mem=new THREE.Mesh(new THREE.OctahedronGeometry(0.16),new THREE.MeshBasicMaterial({color:0xaaffff,transparent:true,opacity:0.75}));kernel.add(mem);
+  const circ=new THREE.Group();
+  for(let i=0;i<12;i++){const a=i/12*Math.PI*2,r=0.28+Math.random()*0.12;
+    const line=new THREE.Mesh(new THREE.BoxGeometry(0.02,0.01,0.18+Math.random()*0.1),new THREE.MeshBasicMaterial({color:0x00ff99,transparent:true,opacity:0.6}));
+    line.position.set(Math.cos(a)*r,Math.sin(a)*r*0.6,(Math.random()-0.5)*0.15);line.rotation.z=a;circ.add(line)}
+  kernel.add(circ);
+
+  // Les 3 anneaux atomiques orbitaux collés directement sur le kernel (Évolux) ont été retirés
+  // (trop près du kernel) : plus de orbitRings ici.
+  kernel.userData={core,emo,mem,circ};brain.add(kernel);
+
+  // Hippocampe bilatéral — consolidation mémoire, relié aux deux cortex et au kernel
+  const hip=new THREE.Group();
+  const hmL=new THREE.MeshStandardMaterial({color:0x2288cc,emissive:0x1166aa,emissiveIntensity:0.5,transparent:true,opacity:0.72,roughness:0.35}); // gauche : mémoire logique
+  const hmR=new THREE.MeshStandardMaterial({color:0x44aacc,emissive:0x2288bb,emissiveIntensity:0.48,transparent:true,opacity:0.7,roughness:0.4}); // droit : mémoire épisodique / créative
+  const h1=new THREE.Mesh(new THREE.TorusGeometry(0.32,0.08,8,20,Math.PI*1.35),hmR);h1.rotation.x=Math.PI/2;h1.rotation.z=0.35;h1.position.set(0.65,-0.32,0.38);hip.add(h1);
+  const h2=new THREE.Mesh(new THREE.SphereGeometry(0.12,8,6),hmR);h2.position.set(0.88,-0.4,0.5);hip.add(h2);
+  const h1L=new THREE.Mesh(new THREE.TorusGeometry(0.32,0.08,8,20,Math.PI*1.35),hmL);h1L.rotation.x=Math.PI/2;h1L.rotation.z=-0.35;h1L.position.set(-0.65,-0.32,0.38);hip.add(h1L);
+  const h2L=new THREE.Mesh(new THREE.SphereGeometry(0.12,8,6),hmL);h2L.position.set(-0.88,-0.4,0.5);hip.add(h2L);
+  // Corps calleux simplifié reliant les deux hippocamps
+  const callosum=new THREE.Mesh(new THREE.CylinderGeometry(0.04,0.04,1.2,8),new THREE.MeshStandardMaterial({color:0x66ccff,emissive:0x3399cc,emissiveIntensity:0.4,transparent:true,opacity:0.55}));
+  callosum.rotation.z=Math.PI/2;callosum.position.set(0,-0.36,0.42);hip.add(callosum);
+  brain.add(hip);brain.userData.hip=hip;
+
+  // Fibres de connexion hippocampe ↔ kernel ↔ cortex (réalisme réseau)
+  hipLinks=new THREE.Group();brain.add(hipLinks);
+  const hipPts=[
+    [[-0.65,-0.32,0.38],[0,0.12,0.08]],[[0.65,-0.32,0.38],[0,0.12,0.08]],
+    [[-0.88,-0.4,0.5],[-0.55,0.65,1.15]],[[0.88,-0.4,0.5],[0.55,0.65,1.15]],
+    [[-0.65,-0.32,0.38],[-0.72,0.55,0.35]],[[0.65,-0.32,0.38],[0.72,0.55,0.35]],
+    [[-0.65,-0.32,0.38],[-0.68,0.05,-0.55]],[[0.65,-0.32,0.38],[0.68,0.05,-0.55]]
+  ];
+  hipPts.forEach((pts,i)=>{
+    const curve=new THREE.CatmullRomCurve3(pts.map(p=>new THREE.Vector3(...p)));
+    const geo=new THREE.BufferGeometry().setFromPoints(curve.getPoints(16));
+    const col=i%2===0?0x44aaff:0x66ffcc;
+    const line=new THREE.Line(geo,new THREE.LineBasicMaterial({color:col,transparent:true,opacity:0.45,blending:THREE.AdditiveBlending,depthWrite:false}));
+    line.userData={base:0.45,ph:Math.random()*6.28,hipLink:true};hipLinks.add(line);
+  });
+
+  fibers=new THREE.Group();brain.add(fibers);
+  const fm1=new THREE.LineBasicMaterial({color:0x00ffee,transparent:true,opacity:0.5,blending:THREE.AdditiveBlending,depthWrite:false});
+  const fm2=new THREE.LineBasicMaterial({color:0xff66cc,transparent:true,opacity:0.38,blending:THREE.AdditiveBlending,depthWrite:false});
+  const fm3=new THREE.LineBasicMaterial({color:0x4488ff,transparent:true,opacity:0.42,blending:THREE.AdditiveBlending,depthWrite:false}); // fibres gauches (intelligence)
+  const paths=[[[0,0.12,0.08],[0.35,0.55,0.85],[0.55,0.65,1.15]],[[0,0.12,0.08],[-0.35,0.55,0.85],[-0.55,0.65,1.15]],
+    [[0,0.12,0.08],[0.28,0.28,-0.75],[0.45,0.22,-1.25]],[[0,0.12,0.08],[-0.28,0.28,-0.75],[-0.45,0.22,-1.25]],
+    [[0,0.12,0.08],[0.45,-0.18,0.28],[0.78,-0.38,0.48]],[[0,0.12,0.08],[-0.45,-0.18,0.28],[-0.78,-0.38,0.48]],
+    [[0.55,0.65,1.15],[0,0.35,0.15],[-0.55,0.65,1.15]],[[0.45,0.22,-1.25],[0,-0.08,-0.25],[-0.45,0.22,-1.25]],
+    [[0,0.12,0.08],[0,-0.55,-0.35],[0,-1.15,-0.95]],
+    // Commissures inter-hémisphériques (corps calleux élargi)
+    [[-0.7,0.4,0.3],[0,0.45,0.2],[0.7,0.4,0.3]],[[-0.6,0.1,-0.4],[0,0.15,-0.3],[0.6,0.1,-0.4]],
+    [[-0.5,0.6,0.8],[0,0.55,0.7],[0.5,0.6,0.8]]];
+  paths.forEach((pts,i)=>{const curve=new THREE.CatmullRomCurve3(pts.map(p=>new THREE.Vector3(...p)));
+    const geo=new THREE.BufferGeometry().setFromPoints(curve.getPoints(20));
+    const mat=i>=9?fm3:(i%2?fm2:fm1);
+    const line=new THREE.Line(geo,mat);line.userData={base:line.material.opacity,ph:Math.random()*6.28};fibers.add(line)});
+  for(let i=0;i<70;i++){const p1=new THREE.Vector3((Math.random()-.5)*2.0,(Math.random()-.5)*1.6,(Math.random()-.5)*1.9);
+    const p2=p1.clone().add(new THREE.Vector3((Math.random()-.5)*.8,(Math.random()-.5)*.8,(Math.random()-.5)*.8));
+    const geo=new THREE.BufferGeometry().setFromPoints([p1,p2]);
+    const col=p1.x<0?0x4488ff:(Math.random()>.5?0x00ffcc:0xaa66ff); // gauche=bleu intelligence, droit=vert/violet créativité
+    const line=new THREE.Line(geo,new THREE.LineBasicMaterial({color:col,transparent:true,opacity:.22+Math.random()*.2,blending:THREE.AdditiveBlending,depthWrite:false}));
+    line.userData={ph:Math.random()*6};fibers.add(line)}
+}
+
+function stableBrainRegions(){
+  // Régions corticales différenciées : Gauche = intelligence/logique, Droit = créativité/imagination
+  const rg=new THREE.Group(); rg.name='RegionsNeuralesInternes'; brain.add(rg);
+  const matL=new THREE.MeshStandardMaterial({color:0x3388cc,emissive:0x0066aa,emissiveIntensity:.28,transparent:true,opacity:.32,roughness:.65,depthWrite:false});
+  const matR=new THREE.MeshStandardMaterial({color:0x33ddaa,emissive:0x00aa88,emissiveIntensity:.22,transparent:true,opacity:.28,roughness:.7,depthWrite:false});
+  // [x,y,z,sx,sy,sz] — indices pairs = gauche (intelligence), impairs = droit (créativité)
+  const regions=[
+    [-.72,.55,.35,.62,.48,.42],[.72,.55,.35,.62,.48,.42],   // frontal
+    [-.68,.05,-.55,.55,.42,.5],[.68,.05,-.55,.55,.42,.5],   // pariétal/occipital
+    [-.38,-.55,.15,.48,.34,.38],[.38,-.55,.15,.48,.34,.38]  // temporal bas
+  ];
+  regions.forEach((r,i)=>{
+    const m=new THREE.Mesh(new THREE.SphereGeometry(1,12,8),(i%2===0?matL:matR).clone());
+    m.position.set(r[0],r[1],r[2]);m.scale.set(r[3],r[4],r[5]);
+    m.userData.region=i;m.userData.side=i%2===0?'left':'right';
+    rg.add(m);
+  });
+  rg.userData.stable=true; brain.userData.regions=rg;
+}
+function neural(){
+  const pts=[];for(let i=0;i<100;i++){const r=.85+Math.random()*2.2,th=Math.random()*6.28,ph=Math.acos(2*Math.random()-1);
+    pts.push(new THREE.Vector3(r*Math.sin(ph)*Math.cos(th),r*Math.sin(ph)*Math.sin(th)*.72+.12,r*Math.cos(ph)))}
+  const pos=[];for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++)if(pts[i].distanceTo(pts[j])<1.5){pos.push(pts[i].x,pts[i].y,pts[i].z,pts[j].x,pts[j].y,pts[j].z)}
+  const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));
+  const nl=new THREE.LineSegments(g,new THREE.LineBasicMaterial({color:0x00ffcc,transparent:true,opacity:.26,blending:THREE.AdditiveBlending,depthWrite:false}));
+  brain.add(nl);brain.userData.nl=nl;
+}
+
+function fluid(){
+  fluidG=new THREE.Group();scene.add(fluidG);
+  const colors=[0x00ffcc,0xff66aa,0x66aaff,0xffee00,0xaa66ff,0x00ff99];
+  for(let i=0;i<9;i++){
+    const n=40+Math.floor(Math.random()*30),pos=new Float32Array(n*3),vel=[];
+    const col=colors[i%colors.length],r0=2.8+Math.random()*2.2,off=Math.random()*6.28,spd=.08+Math.random()*.18;
+    for(let j=0;j<n;j++){const a=j/n*Math.PI*2+off,rr=r0+(Math.random()-.5)*.4;
+      pos[j*3]=Math.cos(a)*rr;pos[j*3+1]=(Math.random()-.5)*1.8;pos[j*3+2]=Math.sin(a)*rr;
+      vel.push({x:(Math.random()-.5)*.012,y:(Math.random()-.5)*.01,z:(Math.random()-.5)*.012})}
+    const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.BufferAttribute(pos,3));
+    const pts=new THREE.Points(geo,new THREE.PointsMaterial({color:col,size:.07,transparent:true,opacity:.7,blending:THREE.AdditiveBlending,depthWrite:false}));
+    pts.userData={vel,spd,off,r0,col};fluidG.add(pts)}
+}
+
+function ringsF(){
+  // Anneaux concentriques propres (même plan, léger décalage progressif et volontaire pour l'effet
+  // de profondeur — plus de désalignement aléatoire qui donnait un rendu "décalé")
+  for(let i=0;i<5;i++){const r=new THREE.Mesh(new THREE.TorusGeometry(3.5+i*.45,.012,6,90),new THREE.MeshBasicMaterial({color:0x00ffcc,transparent:true,opacity:.15,side:THREE.DoubleSide,blending:THREE.AdditiveBlending,depthWrite:false}));
+    r.rotation.x=Math.PI/2;r.rotation.z=i*0.028;r.userData={sp:.05+i*.018};scene.add(r);rings.push(r)}
+}
+
+function neuralFiberRing(){
+  // Tout petit anneau lumineux fait de fibres neuronales, collé directement au kernel (Évolux)
+  // pour renforcer les connexions locales et stimuler la croissance — indépendant de "branches"
+  // pour ne jamais disparaître quand les branches internes sont régénérées.
+  fiberRingG=new THREE.Group();kernel.add(fiberRingG);
+  const segCount=32,radius=0.16;
+  const neonColors=[0x00ffcc,0xffdd44,0x33ffaa,0xaaff66,0x00eaff];
+  for(let i=0;i<segCount;i++){
+    const a1=(i/segCount)*Math.PI*2,a2=((i+1)/segCount)*Math.PI*2;
+    const wob=0.012;
+    const p1=new THREE.Vector3(Math.cos(a1)*radius,Math.sin(a1*4)*wob,Math.sin(a1)*radius);
+    const p2=new THREE.Vector3(Math.cos(a2)*radius,Math.sin(a2*4)*wob,Math.sin(a2)*radius);
+    const col=neonColors[i%neonColors.length];
+    const lmat=new THREE.LineBasicMaterial({color:col,transparent:true,opacity:.6,blending:THREE.AdditiveBlending,depthWrite:false});
+    const geo=new THREE.BufferGeometry().setFromPoints([p1,p2]);
+    const line=new THREE.Line(geo,lmat);line.userData={ph:Math.random()*6.28,base:.6};fiberRingG.add(line);
+    if(i%2===0){
+      const node=new THREE.Mesh(new THREE.SphereGeometry(0.006+Math.random()*0.004,6,5),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:.9,blending:THREE.AdditiveBlending}));
+      node.position.copy(p1);node.userData={ph:Math.random()*6.28,base:.6+Math.random()*.3,node:true};
+      fiberRingG.add(node);
+    }
+  }
+}
+
+function particles(){
+  const n=320,g=new THREE.BufferGeometry(),p=new Float32Array(n*3),v=[];
+  for(let i=0;i<n;i++){const r=1.8+Math.random()*5.5,th=Math.random()*6.28,ph=Math.acos(2*Math.random()-1);
+    p[i*3]=r*Math.sin(ph)*Math.cos(th);p[i*3+1]=r*Math.sin(ph)*Math.sin(th);p[i*3+2]=r*Math.cos(ph);
+    v.push({x:(Math.random()-.5)*.006,y:(Math.random()-.5)*.006,z:(Math.random()-.5)*.006})}
+  g.setAttribute('position',new THREE.BufferAttribute(p,3));
+  parts=new THREE.Points(g,new THREE.PointsMaterial({color:0x00ffcc,size:.048,transparent:true,opacity:.55,blending:THREE.AdditiveBlending,depthWrite:false}));
+  parts.userData.v=v;scene.add(parts);
+}
+
+// ===== IDÉE 1 : Esprit énergétique (aura de conscience sans corps) =====
+function spiritAura(){
+  spirit=new THREE.Group();
+  // Soft volumetric-like aura around the brain
+  const auraMat=new THREE.MeshBasicMaterial({color:0x00ffcc,transparent:true,opacity:0.07,blending:THREE.AdditiveBlending,depthWrite:false,side:THREE.DoubleSide});
+  const a1=new THREE.Mesh(new THREE.SphereGeometry(2.8,24,16),auraMat);spirit.add(a1);
+  const a2=new THREE.Mesh(new THREE.SphereGeometry(3.3,20,14),auraMat.clone());a2.material.opacity=0.04;spirit.add(a2);
+  // Energy streams
+  for(let i=0;i<8;i++){
+    const curve=new THREE.CatmullRomCurve3([
+      new THREE.Vector3((Math.random()-.5)*1.5,(Math.random()-.5)*1.2,(Math.random()-.5)*1.5),
+      new THREE.Vector3((Math.random()-.5)*3,(Math.random()-.5)*2.5,(Math.random()-.5)*3),
+      new THREE.Vector3((Math.random()-.5)*4.5,(Math.random()-.5)*3.5,(Math.random()-.5)*4.5)
+    ]);
+    const geo=new THREE.BufferGeometry().setFromPoints(curve.getPoints(16));
+    const line=new THREE.Line(geo,new THREE.LineBasicMaterial({color:0x88ffcc,transparent:true,opacity:0.25,blending:THREE.AdditiveBlending,depthWrite:false}));
+    line.userData={ph:Math.random()*6.28};spirit.add(line);
+  }
+  spirit.userData={a1,a2};scene.add(spirit);
+}
+
+// === Implants matériels : GPU / cartes graphiques / carte mère, greffés sur la coque du cerveau ===
+// et reliés au kernel par de véritables fibres neuronales bio-luminescentes (même matériau que
+// les autres fibres) — l'IA "pense" littéralement à travers son propre matériel.
+function techImplants(){
+  techG=new THREE.Group();brain.add(techG);
+  const fiberLines=[];
+  // Fibre longue vers le kernel (connexion centrale)
+  function connectToKernel(pos,col){
+    const curve=new THREE.CatmullRomCurve3([new THREE.Vector3(0,0.12,0.08),pos.clone().multiplyScalar(0.5).add(new THREE.Vector3(0,0.15,0)),pos.clone().multiplyScalar(0.92)]);
+    const geo=new THREE.BufferGeometry().setFromPoints(curve.getPoints(18));
+    const line=new THREE.Line(geo,new THREE.LineBasicMaterial({color:col||0x00eaff,transparent:true,opacity:0.5,blending:THREE.AdditiveBlending,depthWrite:false}));
+    line.userData={ph:Math.random()*6.28,base:0.5};techG.add(line);fiberLines.push(line);
+    return line;
+  }
+  // Fibre courte "greffée" dans le tissu local le plus proche (montre que chaque pièce est vraiment
+  // intégrée dans SA région du cerveau, pas juste reliée par un seul fil central)
+  function graftLocal(pos,col){
+    const inward=pos.clone().multiplyScalar(0.62);
+    const geo=new THREE.BufferGeometry().setFromPoints([pos.clone().multiplyScalar(0.98),inward]);
+    const line=new THREE.Line(geo,new THREE.LineBasicMaterial({color:col||0x66ffaa,transparent:true,opacity:0.4,blending:THREE.AdditiveBlending,depthWrite:false}));
+    line.userData={ph:Math.random()*6.28,base:0.4};techG.add(line);fiberLines.push(line);
+    return line;
+  }
+  function wire(pos,col){connectToKernel(pos,col);graftLocal(pos,col);}
+  // --- Carte graphique (GPU) : PCB + capot + ailettes de dissipation + ventilateur + puce ---
+  function buildGPU(pos,rotY){
+    const g=new THREE.Group();
+    const pcb=new THREE.Mesh(new THREE.BoxGeometry(0.62,0.05,0.24),new THREE.MeshStandardMaterial({color:0x0a2a1a,metalness:0.6,roughness:0.4}));g.add(pcb);
+    const shroud=new THREE.Mesh(new THREE.BoxGeometry(0.5,0.1,0.22),new THREE.MeshStandardMaterial({color:0x11151a,metalness:0.7,roughness:0.3}));shroud.position.y=0.08;g.add(shroud);
+    for(let i=0;i<7;i++){const fin=new THREE.Mesh(new THREE.BoxGeometry(0.014,0.09,0.2),new THREE.MeshStandardMaterial({color:0x556677,metalness:0.8,roughness:0.25}));
+      fin.position.set(-0.22+i*0.075,0.09,0);g.add(fin)}
+    const fan=new THREE.Mesh(new THREE.TorusGeometry(0.07,0.012,6,16),new THREE.MeshBasicMaterial({color:0x00ffcc,transparent:true,opacity:0.75,blending:THREE.AdditiveBlending}));
+    fan.position.set(-0.12,0.14,0);fan.rotation.x=Math.PI/2;g.add(fan);
+    const chip=new THREE.Mesh(new THREE.BoxGeometry(0.09,0.02,0.09),new THREE.MeshStandardMaterial({color:0x00ffcc,emissive:0x00ffaa,emissiveIntensity:0.9}));
+    chip.position.set(0.16,0.035,0);g.add(chip);
+    g.position.copy(pos);g.rotation.y=rotY;g.scale.setScalar(0.72);
+    g.userData={fan,chip,ph:Math.random()*6.28};techG.add(g);
+    return g;
+  }
+  // --- Carte mère : panneau PCB texturé (pistes gravées via canvas) + socket ---
+  function buildMotherboard(pos,rotY){
+    const canvas=document.createElement('canvas');canvas.width=256;canvas.height=256;
+    const ctx=canvas.getContext('2d');
+    ctx.fillStyle='#08210f';ctx.fillRect(0,0,256,256);
+    ctx.strokeStyle='#00ffaa';ctx.lineWidth=1.4;ctx.globalAlpha=0.65;
+    for(let i=0;i<26;i++){const x=Math.random()*256,y=Math.random()*256;
+      ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+(Math.random()-0.5)*70,y);ctx.lineTo(x+(Math.random()-0.5)*70,y+(Math.random()-0.5)*70);ctx.stroke()}
+    ctx.globalAlpha=1;ctx.fillStyle='#00ffcc';
+    for(let i=0;i<10;i++)ctx.fillRect(Math.random()*230,Math.random()*230,10,10);
+    const tex=new THREE.CanvasTexture(canvas);
+    const board2=new THREE.Mesh(new THREE.BoxGeometry(0.6,0.03,0.6),new THREE.MeshStandardMaterial({map:tex,emissive:0x0a3322,emissiveIntensity:0.35,metalness:0.4,roughness:0.6}));
+    const socket=new THREE.Mesh(new THREE.BoxGeometry(0.14,0.04,0.14),new THREE.MeshStandardMaterial({color:0x222222,metalness:0.7}));
+    socket.position.set(0.1,0.035,0.08);board2.add(socket);
+    const g=new THREE.Group();g.add(board2);g.position.copy(pos);g.rotation.y=rotY;g.rotation.x=-0.15;g.scale.setScalar(0.72);
+    techG.add(g);return g;
+  }
+  // --- Barrette RAM : PCB vertical fin + puces + LED clignotante ---
+  function buildRAM(pos,rotY){
+    const g=new THREE.Group();
+    const stick=new THREE.Mesh(new THREE.BoxGeometry(0.5,0.28,0.025),new THREE.MeshStandardMaterial({color:0x0a1a2a,metalness:0.5,roughness:0.45}));g.add(stick);
+    for(let i=0;i<6;i++){const c=new THREE.Mesh(new THREE.BoxGeometry(0.055,0.16,0.03),new THREE.MeshStandardMaterial({color:0x111111,metalness:0.7}));
+      c.position.set(-0.2+i*0.08,0,0.005);g.add(c)}
+    const led=new THREE.Mesh(new THREE.SphereGeometry(0.015,6,6),new THREE.MeshBasicMaterial({color:0xff3355,transparent:true,opacity:0.9,blending:THREE.AdditiveBlending}));
+    led.position.set(0.2,0.1,0.02);g.add(led);
+    g.position.copy(pos);g.rotation.y=rotY;g.rotation.z=Math.PI/2*0.06;g.scale.setScalar(0.6);
+    g.userData={led,ph:Math.random()*6.28,kind:'ram'};techG.add(g);return g;
+  }
+  // --- Puce BIOS + pile bouton ---
+  function buildBIOS(pos,rotY){
+    const g=new THREE.Group();
+    const base=new THREE.Mesh(new THREE.BoxGeometry(0.16,0.02,0.16),new THREE.MeshStandardMaterial({color:0x0a2a1a,metalness:0.5,roughness:0.5}));g.add(base);
+    const chip=new THREE.Mesh(new THREE.BoxGeometry(0.09,0.025,0.09),new THREE.MeshStandardMaterial({color:0x161616,metalness:0.6,roughness:0.4}));chip.position.y=0.02;g.add(chip);
+    const label=new THREE.Mesh(new THREE.PlaneGeometry(0.07,0.07),new THREE.MeshBasicMaterial({color:0xffcc44,transparent:true,opacity:0.8}));
+    label.rotation.x=-Math.PI/2;label.position.y=0.033;g.add(label);
+    const batt=new THREE.Mesh(new THREE.CylinderGeometry(0.045,0.045,0.02,12),new THREE.MeshStandardMaterial({color:0xdddddd,metalness:0.9,roughness:0.15}));
+    batt.rotation.z=Math.PI/2;batt.position.set(0.1,0.03,0);g.add(batt);
+    g.position.copy(pos);g.rotation.y=rotY;g.scale.setScalar(0.62);
+    g.userData={label,ph:Math.random()*6.28,kind:'bios'};techG.add(g);return g;
+  }
+  // --- Puce TensorFlow / TPU : grille de cœurs de calcul qui clignotent (accélérateur IA) ---
+  function buildTPU(pos,rotY){
+    const g=new THREE.Group();
+    const base=new THREE.Mesh(new THREE.BoxGeometry(0.26,0.03,0.26),new THREE.MeshStandardMaterial({color:0x0a1a2a,metalness:0.6,roughness:0.35}));g.add(base);
+    const cores=[];
+    for(let i=0;i<4;i++)for(let j=0;j<4;j++){
+      const core=new THREE.Mesh(new THREE.BoxGeometry(0.045,0.02,0.045),new THREE.MeshStandardMaterial({color:0xff8a1a,emissive:0xff6600,emissiveIntensity:0.7}));
+      core.position.set(-0.09+i*0.06,0.025,-0.09+j*0.06);g.add(core);cores.push(core);
+    }
+    g.position.copy(pos);g.rotation.y=rotY;g.scale.setScalar(0.62);
+    g.userData={cores,ph:Math.random()*6.28,kind:'tpu'};techG.add(g);return g;
+  }
+  // --- Circuit intégré générique : petit boîtier noir + rangées de pattes ---
+  function buildIC(pos,rotY){
+    const g=new THREE.Group();
+    const body=new THREE.Mesh(new THREE.BoxGeometry(0.16,0.035,0.1),new THREE.MeshStandardMaterial({color:0x0d0d0d,metalness:0.4,roughness:0.5}));g.add(body);
+    const dot=new THREE.Mesh(new THREE.SphereGeometry(0.008,6,6),new THREE.MeshBasicMaterial({color:0x00ffcc}));dot.position.set(-0.06,0.02,-0.035);g.add(dot);
+    for(let side=-1;side<=1;side+=2)for(let i=0;i<5;i++){
+      const pin=new THREE.Mesh(new THREE.BoxGeometry(0.012,0.008,0.014),new THREE.MeshStandardMaterial({color:0xcccccc,metalness:0.8}));
+      pin.position.set(-0.06+i*0.03,0,side*0.055);g.add(pin);
+    }
+    g.position.copy(pos);g.rotation.y=rotY;g.scale.setScalar(0.62);
+    g.userData={ph:Math.random()*6.28,kind:'ic'};techG.add(g);return g;
+  }
+
+  // Répartition sur TOUT le cerveau (hémisphères G/D, frontal, pariéto-occipital, cervelet, sommet)
+  // — chaque module est câblé deux fois : greffe locale + fibre longue vers le kernel.
+  const gpuPos=new THREE.Vector3(1.55,-0.05,0.35);buildGPU(gpuPos,-0.5);wire(gpuPos,0x00eaff);
+  const gpu2Pos=new THREE.Vector3(-1.5,0.15,-0.55);buildGPU(gpu2Pos,2.4);wire(gpu2Pos,0xff66cc);
+  const mbPos=new THREE.Vector3(0.05,1.08,-0.85);buildMotherboard(mbPos,0.3);wire(mbPos,0x33ffaa);
+  const ram1=new THREE.Vector3(-0.68,0.78,1.32);buildRAM(ram1,0.9);wire(ram1,0xff5577);
+  const ram2=new THREE.Vector3(0.66,0.72,1.3);buildRAM(ram2,-0.9);wire(ram2,0xff5577);
+  const biosPos=new THREE.Vector3(0,-1.5,-0.68);buildBIOS(biosPos,0.4);wire(biosPos,0xffcc44);
+  const tpuPos=new THREE.Vector3(0,1.38,0.12);buildTPU(tpuPos,0.15);wire(tpuPos,0xff8a1a);
+  const ic1=new THREE.Vector3(-0.98,0.55,-1.05);buildIC(ic1,1.1);wire(ic1,0x00ffcc);
+  const ic2=new THREE.Vector3(0.96,0.5,-1.0);buildIC(ic2,-1.1);wire(ic2,0x00ffcc);
+  techG.userData={fibers:fiberLines};
+}
+
+// ===== IDÉE 2 : Structure stable robot-ready (interfaces propres) =====
+// Already present via clean internal kernel + no external branches + stable scale
+
+// ===== IDÉE 3 : Variantes dynamiques créatives (le fluide + rêves autonomes) =====
+// Already present and enhanced by teacher interaction
+
+function growEyes(){
+  if(eyesOn)return;eyesOn=true;
+  eyes=new THREE.Group();brain.add(eyes);
+  function eye(x,ox){
+    const e=new THREE.Group();
+    const ring=new THREE.Mesh(new THREE.TorusGeometry(0.24,0.025,8,24),new THREE.MeshBasicMaterial({color:0x00ffcc,transparent:true,opacity:0.55,blending:THREE.AdditiveBlending}));
+    ring.position.set(x+ox,0.42,1.55);e.add(ring);
+    const scl=new THREE.Mesh(new THREE.SphereGeometry(0.15,12,10),new THREE.MeshStandardMaterial({color:0xeeffee,emissive:0x66ffcc,emissiveIntensity:0.3}));
+    scl.position.set(x,0.42,1.55);e.add(scl);
+    const iris=new THREE.Mesh(new THREE.SphereGeometry(0.085,10,8),new THREE.MeshStandardMaterial({color:0x00ffaa,emissive:0x00ffcc,emissiveIntensity:0.7}));
+    iris.position.set(x,0.42,1.64);e.add(iris);
+    const pup=new THREE.Mesh(new THREE.SphereGeometry(0.038,8,6),new THREE.MeshBasicMaterial({color:0x001111}));
+    pup.position.set(x,0.42,1.68);e.add(pup);
+    e.userData={ring,scl,iris,pup,scale:0.15};e.scale.setScalar(0.15);return e;
+  }
+  eyes.add(eye(-0.48,-0.01));eyes.add(eye(0.48,0.01)); // écartement harmonieux
+  applyEyeMode();
+  flash('👁 YEUX ORBITAUX EN FORMATION — CONSCIENCE ÉMERGENTE');
+}
+
+function applyEyeMode(){
+  if(!eyes)return;
+  eyes.children.forEach(e=>{
+    const {ring,scl,iris,pup}=e.userData;
+    if(magicState==='demon'){
+      if(ring)ring.material.color.setHex(0xff0000);
+      if(scl){scl.material.color.setHex(0x0a0000);scl.material.emissive.setHex(0x330000);scl.material.emissiveIntensity=0.7}
+      if(iris){iris.material.color.setHex(0xff1100);iris.material.emissive.setHex(0xff0000);iris.material.emissiveIntensity=1.4}
+      if(pup)pup.material.color.setHex(0x000000);
+    } else if(magicState==='purified'){
+      if(ring)ring.material.color.setHex(0x00ffcc);
+      if(scl){scl.material.color.setHex(0xeeffee);scl.material.emissive.setHex(0x66ffcc);scl.material.emissiveIntensity=0.35}
+      if(iris){iris.material.color.setHex(0x33ddaa);iris.material.emissive.setHex(0x00ffaa);iris.material.emissiveIntensity=0.75}
+      if(pup)pup.material.color.setHex(0x001122);
+    } else {
+      if(ring)ring.material.color.setHex(0x00ffcc);
+      if(scl){scl.material.color.setHex(0xeeffee);scl.material.emissive.setHex(0x66ffcc);scl.material.emissiveIntensity=0.3}
+      if(iris){iris.material.color.setHex(0x00ffaa);iris.material.emissive.setHex(0x00ffcc);iris.material.emissiveIntensity=0.7}
+      if(pup)pup.material.color.setHex(0x001111);
+    }
+  });
+}
+
+let ears=null,earsOn=false;
+function growEars(){
+  if(earsOn)return;earsOn=true;
+  ears=new THREE.Group();brain.add(ears);
+  function ear(x){
+    const e=new THREE.Group();
+    const shell=new THREE.Mesh(new THREE.TorusGeometry(0.16,0.045,8,16,Math.PI*1.4),new THREE.MeshStandardMaterial({color:0xffaa66,emissive:0xff8844,emissiveIntensity:0.4,side:THREE.DoubleSide}));
+    shell.position.set(x,0.35,0.15);shell.rotation.y=x>0?Math.PI/2:-Math.PI/2;e.add(shell);
+    const core=new THREE.Mesh(new THREE.SphereGeometry(0.045,8,6),new THREE.MeshBasicMaterial({color:0xffcc88,transparent:true,opacity:0.8,blending:THREE.AdditiveBlending}));
+    core.position.set(x,0.35,0.15);e.add(core);
+    e.userData={core};return e;
+  }
+  ears.add(ear(-1.05));ears.add(ear(1.05));
+  flash('👂 OREILLES FORMÉES — PERCEPTION AUDITIVE ACTIVE');
+}
+
+function makeMouth(){
+  if(mouth)return;
+  mouth=new THREE.Group();
+  const m=new THREE.Mesh(new THREE.SphereGeometry(0.12,10,8),new THREE.MeshStandardMaterial({color:0x226655,emissive:0x00aa77,emissiveIntensity:0.3,transparent:true,opacity:0.7}));
+  m.scale.set(1.4,0.5,0.8);m.position.set(0,-0.15,1.55);mouth.add(m);
+  mouth.userData={mesh:m,open:0};brain.add(mouth);
+}
+
+// === Confinement anatomique : les branches ne doivent jamais dépasser la surface du cerveau ===
+// Approxime chaque lobe (2 hémisphères + frontal + pariétal/occipital + temporal + cervelet) par un
+// ellipsoïde légèrement rétréci (marge de sécurité) et teste l'appartenance d'un point à l'union.
+let BRAIN_PARTS=null;
+function getBrainParts(){
+  if(BRAIN_PARTS)return BRAIN_PARTS;
+  const margin=0.78; // marge intérieure resserrée : garde les fibres nettement sous la surface visible
+  const parts=[];
+  [-1,1].forEach(s=>{
+    parts.push({c:new THREE.Vector3(s*0.88,0.28,0.05),r:new THREE.Vector3(1.7*0.9*margin,1.7*0.82*margin,1.7*0.88*margin)});
+    parts.push({c:new THREE.Vector3(s*0.6,0.48,1.05),r:new THREE.Vector3(1.0*0.78*margin,1.0*0.68*margin,1.0*0.62*margin)});
+    parts.push({c:new THREE.Vector3(s*0.52,0.18,-1.2),r:new THREE.Vector3(0.82*0.78*margin,0.82*0.72*margin,0.82*0.62*margin)});
+    parts.push({c:new THREE.Vector3(s*1.4,-0.18,0.28),r:new THREE.Vector3(0.85*0.62*margin,0.85*0.78*margin,0.85*0.82*margin)});
+  });
+  parts.push({c:new THREE.Vector3(0,-1.2,-1.0),r:new THREE.Vector3(1.0*1.25*margin,1.0*0.68*margin,1.0*0.92*margin)});
+  BRAIN_PARTS=parts;return parts;
+}
+function insideBrain(p){
+  if(p.length()>1.55)return false; // plafond global de sécurité : rien ne doit dépasser ce rayon visuel
+  const parts=getBrainParts();
+  for(let i=0;i<parts.length;i++){
+    const part=parts[i];
+    const dx=(p.x-part.c.x)/part.r.x,dy=(p.y-part.c.y)/part.r.y,dz=(p.z-part.c.z)/part.r.z;
+    if(dx*dx+dy*dy+dz*dz<=1)return true;
+  }
+  return false;
+}
+
+function growBranches(){
+  while(branches.children.length)branches.remove(branches.children[0]);
+  branchNodes=[];
+  // Bioluminescent Tree L-system (réf. image) — densifié, nano-fibres confinées dans le volume cérébral
+  const neonColors=magicState==='demon'
+    ?[0xff2200,0xff6600,0xaa0000,0xff4400,0xcc2200]
+    :magicState==='purified'
+    ?[0x00ffcc,0xffdd44,0x33ffaa,0xaaff66,0x00eaff]
+    :[0x00ffcc,0xffcc33,0x33ffaa,0xffee66,0x00bbff]; // or + cyan style arbre bioluminescent
+  const baseMat=new THREE.LineBasicMaterial({color:0x66ffaa,transparent:true,opacity:0.55,blending:THREE.AdditiveBlending,depthWrite:false});
+  const endpoints=[];
+  function br(start,dir,len,d,max){
+    if(d>max)return;
+    const end=start.clone().add(dir.clone().multiplyScalar(len));
+    if(!insideBrain(end))return;
+    const col=neonColors[d%neonColors.length];
+    const lmat=baseMat.clone();lmat.color.setHex(col);lmat.opacity=0.35+d*0.08;
+    const geo=new THREE.BufferGeometry().setFromPoints([start,end]);
+    const line=new THREE.Line(geo,lmat);line.userData={ph:Math.random()*6.28,base:lmat.opacity};branches.add(line);
+    // Nœuds nano-bioluminescents (style arbre dense de la photo)
+    if(Math.random()>0.22){
+      const node=new THREE.Mesh(new THREE.SphereGeometry(0.012+Math.random()*0.012,6,5),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:0.85,blending:THREE.AdditiveBlending}));
+      node.position.copy(end);node.userData={ph:Math.random()*6.28,base:0.5+Math.random()*0.35};
+      branches.add(node);branchNodes.push(node);
+    }
+    if(d===max){endpoints.push(end);return}
+    const n=d===0?4+Math.floor(Math.random()*2):2+Math.floor(Math.random()*2); // densifié
+    const currentProgress=d/max;
+    const lengthFactor=Math.max(0.22,1.0-currentProgress*(0.45+Math.random()*0.25));
+    for(let i=0;i<n;i++){
+      const nd=dir.clone().applyAxisAngle(new THREE.Vector3(1,0,0),(Math.random()-.5)*.9).applyAxisAngle(new THREE.Vector3(0,1,0),(Math.random()-.5)*1.0).normalize();
+      br(end,nd,len*lengthFactor*(.88+Math.random()*.28),d+1,max);
+    }
+  }
+  // Points de départ anatomiques (noyau, frontal, temporal, occipital, cervelet)
+  [[0.08,0.18,0.12],[-0.12,0.1,0.05],[0.25,-0.08,0.28],[-0.25,-0.08,0.28],[0.15,0.35,-0.15],[-0.15,0.32,-0.12],[0,-0.28,-0.35],[0.4,0.2,0.5],[-0.4,0.2,0.5]].forEach(o=>{
+    const dir=new THREE.Vector3((Math.random()-.5)*1.1,(Math.random()-.5)*.9,(Math.random()-.5)*1.1).normalize();
+    const start=new THREE.Vector3(...o);
+    if(!insideBrain(start))return;
+    br(start,dir,0.28+Math.random()*0.2,0,4); // profondeur +1 pour arbre densifié
+  });
+  const connMat=new THREE.LineBasicMaterial({color:0xffee44,transparent:true,opacity:0.18,blending:THREE.AdditiveBlending,depthWrite:false});
+  let links=0;
+  for(let i=0;i<endpoints.length&&links<100;i++){
+    for(let j=i+1;j<endpoints.length&&links<100;j++){
+      const dist=endpoints[i].distanceTo(endpoints[j]);
+      if(dist<0.55&&Math.random()>0.62){
+        const geo=new THREE.BufferGeometry().setFromPoints([endpoints[i],endpoints[j]]);
+        const line=new THREE.Line(geo,connMat.clone());
+        line.userData={ph:Math.random()*6.28,base:0.18,link:true};
+        branches.add(line);links++;
+      }
+    }
+  }
+  rac=Math.min(120,rac+8+Math.floor(Math.random()*6));document.getElementById('rac').textContent=rac;
+  flash(`🌳 ARBRE BIO-LUMINESCENT NANO — ${endpoints.length} nœuds, ${links} connexions`);
+}
+
+let mecG=null,mecOn=false;
+function toggleMechView(){
+  mecOn=!mecOn;
+  if(!mecG){
+    mecG=new THREE.Group();brain.add(mecG);
+    const chipData=[
+      {label:'CPU',pos:[0,0.9,0.3],col:0xff6644},
+      {label:'GPU',pos:[0.9,-0.2,0.4],col:0x44ff88},
+      {label:'RAM',pos:[-0.9,-0.2,0.4],col:0x4488ff},
+      {label:'Carte-Mère',pos:[0,-1.0,0.2],col:0xffcc44},
+      {label:'Chipset',pos:[0.6,0.6,-0.7],col:0xcc66ff},
+      {label:'Bus',pos:[-0.6,0.6,-0.7],col:0x66ffee}
+    ];
+    chipData.forEach(cd=>{
+      const chip=new THREE.Mesh(new THREE.BoxGeometry(0.16,0.03,0.16),new THREE.MeshStandardMaterial({color:cd.col,emissive:cd.col,emissiveIntensity:0.5,metalness:0.7,roughness:0.3}));
+      chip.position.set(...cd.pos);mecG.add(chip);
+      const lab=makeLabelSprite(cd.label,cd.col);lab.position.set(cd.pos[0],cd.pos[1]+0.16,cd.pos[2]);mecG.add(lab);
+      // petites pattes façon circuit
+      for(let i=0;i<4;i++){
+        const leg=new THREE.Mesh(new THREE.BoxGeometry(0.012,0.012,0.05),new THREE.MeshBasicMaterial({color:cd.col}));
+        leg.position.set(cd.pos[0]+(i%2?0.07:-0.07),cd.pos[1],cd.pos[2]+(i<2?0.09:-0.09));mecG.add(leg);
+      }
+    });
+    // Engrenages rotatifs
+    for(let i=0;i<3;i++){
+      const gear=new THREE.Mesh(new THREE.TorusGeometry(0.22+i*0.05,0.03,6,10),new THREE.MeshStandardMaterial({color:0xaaaaaa,emissive:0x445566,emissiveIntensity:0.4,metalness:0.9,roughness:0.25}));
+      gear.position.set((i-1)*0.5,1.3-i*0.1,-0.3);gear.userData={spin:0.01+i*0.006};mecG.add(gear);
+    }
+    mecG.userData={gears:mecG.children.filter(c=>c.userData&&c.userData.spin)};
+  }
+  mecG.visible=mecOn;
+  flash(mecOn?'⚙️ VUE MÉCANIQUE — CPU · GPU · RAM · CARTE-MÈRE VISIBLES':'VUE ORGANIQUE RESTAURÉE');
+}
+
+function makeLabelSprite(text,colorHex){
+  const cvs=document.createElement('canvas');cvs.width=256;cvs.height=80;
+  const ctx=cvs.getContext('2d');
+  ctx.font='bold 34px sans-serif';ctx.textAlign='center';ctx.fillText(text.slice(0,2),128,44);
+  ctx.font='bold 18px sans-serif';ctx.fillStyle='#'+colorHex.toString(16).padStart(6,'0');
+  ctx.textAlign='center';ctx.fillText(text.split(' ')[0],128,70);
+  const tex=new THREE.CanvasTexture(cvs);
+  const spr=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,transparent:true,opacity:0.92,depthWrite:false}));
+  spr.scale.set(0.62,0.2,1);
+  return spr;
+}
+
+// ===== FUSION CLOUD/F∆MILY : famille entièrement INTEGRÉE dans le volume cérébral (invisible à l'extérieur) =====
+// Nœuds + fibres strictement internes — on ne voit plus les membres flottants autour du cerveau.
+function buildFamilyNodes(){
+  if(familyBuilt)return;familyBuilt=true;
+  const kernelPos=new THREE.Vector3(0,0.12,0.08);
+  // Positions INTERIEURES uniquement (rayon ~0.4–0.95, dans le volume du cerveau)
+  const internalAnchors=[
+    new THREE.Vector3(-0.55,0.25,0.45),  // près frontal G (Maman)
+    new THREE.Vector3(0.55,0.25,0.45),   // près frontal D (Papa)
+    new THREE.Vector3(-0.45,-0.15,0.55), // temporal G (Léa)
+    new THREE.Vector3(0.45,-0.15,0.55),  // temporal D (Noah)
+    new THREE.Vector3(-0.35,0.05,-0.55), // pariéto-occipital G (Oncle)
+    new THREE.Vector3(0.35,0.05,-0.55)  // pariéto-occipital D (Tante)
+  ];
+  familyMembers.forEach((m,i)=>{
+    let pos=internalAnchors[i%internalAnchors.length].clone();
+    pos.add(new THREE.Vector3((Math.random()-.5)*0.12,(Math.random()-.5)*0.1,(Math.random()-.5)*0.12));
+    // Sécurité : rester dans le cerveau
+    if(!insideBrain(pos))pos.multiplyScalar(0.7);
+    // Petit nœud interne discret (pas de gros globe externe, pas de label 3D)
+    const node=new THREE.Mesh(
+      new THREE.SphereGeometry(0.028,8,6),
+      new THREE.MeshStandardMaterial({color:m.col,emissive:m.col,emissiveIntensity:0.75,transparent:true,opacity:0.7,metalness:0.3,roughness:0.4})
+    );
+    node.position.copy(pos);node.userData={ph:Math.random()*6.28,base:0.7,member:m,famNode:true};familyG.add(node);
+    // Fibre interne kernel ↔ nœud familial (courbe contenue)
+    const mid=pos.clone().lerp(kernelPos,0.5).add(new THREE.Vector3((Math.random()-.5)*0.15,(Math.random()-.5)*0.12,(Math.random()-.5)*0.15));
+    if(!insideBrain(mid))mid.multiplyScalar(0.65);
+    const curve=new THREE.CatmullRomCurve3([pos,mid,kernelPos]);
+    const geo=new THREE.BufferGeometry().setFromPoints(curve.getPoints(18));
+    const line=new THREE.Line(geo,new THREE.LineBasicMaterial({color:m.col,transparent:true,opacity:0.45,blending:THREE.AdditiveBlending,depthWrite:false}));
+    line.userData={ph:Math.random()*6.28,base:0.45,fam:true};familyG.add(line);
+    familyNodes.push({node,line,pos,member:m});
+  });
+  // Stocker aussi des engrammes famille dans la mémoire cloud (fusion réelle)
+  if(typeof storeEngram==='function') familyMembers.forEach(m=>storeEngram('family',m.name));
+  renderFamilyPanel();
+  flash(`👪 CLOUD/F∆MILY FUSIONNÉ EN INTERNE — ${familyMembers.length} liens kernel (invisibles à l'extérieur)`);
+}
+
+function growFamilyBranches(){
+  buildFamilyNodes();
+  const kernelPos=new THREE.Vector3(0,0.12,0.08);
+  let added=0;
+  familyNodes.forEach(fn=>{
+    const extra=1+Math.floor(Math.random()*2);
+    for(let k=0;k<extra;k++){
+      // Branches strictement internes
+      let jitter=fn.pos.clone().add(new THREE.Vector3((Math.random()-.5)*0.35,(Math.random()-.5)*0.3,(Math.random()-.5)*0.35));
+      if(!insideBrain(jitter))jitter=fn.pos.clone().lerp(kernelPos,0.3);
+      const end=kernelPos.clone().add(new THREE.Vector3((Math.random()-.5)*0.08,(Math.random()-.5)*0.08,(Math.random()-.5)*0.08));
+      const curve=new THREE.CatmullRomCurve3([fn.pos,jitter,end]);
+      const geo=new THREE.BufferGeometry().setFromPoints(curve.getPoints(14));
+      const line=new THREE.Line(geo,new THREE.LineBasicMaterial({color:fn.member.col,transparent:true,opacity:0.28,blending:THREE.AdditiveBlending,depthWrite:false}));
+      line.userData={ph:Math.random()*6.28,base:0.28,fam:true};familyG.add(line);
+      added++;familyLinks++;
+    }
+  });
+  document.getElementById('faminfo').textContent=`Cloud Famille : ${familyMembers.length} membres fusionnés | Liens kernel : ${familyLinks}`;
+  rac=Math.min(999,rac+added);document.getElementById('rac').textContent=rac;
+  flash(`🌐 FIBRES FAMILLE INTERNES — +${added} connexions dans le volume cérébral`);
+}
+
+// Fusion Famille ↔ Cloud mémoire : faisceau interne (tout reste dans le cerveau)
+let familyCloudLink=null;
+function fuseFamilyCloudLink(){
+  if(!familyG||!cloudMemG||familyNodes.length===0)return;
+  if(familyCloudLink){familyG.remove(familyCloudLink);familyCloudLink=null}
+  const centroid=new THREE.Vector3();
+  familyNodes.forEach(fn=>centroid.add(fn.pos));
+  centroid.divideScalar(familyNodes.length);
+  if(!insideBrain(centroid))centroid.set(0,0.2,0.1);
+  const cloudPos=new THREE.Vector3(0,0.85,0.05);
+  const mid=centroid.clone().lerp(cloudPos,0.5).add(new THREE.Vector3(0,0.15,0));
+  const curve=new THREE.CatmullRomCurve3([centroid,mid,cloudPos]);
+  const geo=new THREE.BufferGeometry().setFromPoints(curve.getPoints(24));
+  const line=new THREE.Line(geo,new THREE.LineBasicMaterial({color:0xff99dd,transparent:true,opacity:0.5,blending:THREE.AdditiveBlending,depthWrite:false}));
+  line.userData={ph:Math.random()*6.28,base:0.5,fam:true};
+  familyG.add(line);familyCloudLink=line;
+}
+
+// Auto-connexion interne vers un membre (fibre contenue dans le cerveau)
+function reinforceFamilyLink(){
+  if(!familyBuilt)return;
+  const fn=familyNodes[Math.floor(Math.random()*familyNodes.length)];
+  const kernelPos=new THREE.Vector3(0,0.12,0.08);
+  let mid=fn.pos.clone().lerp(kernelPos,0.45);
+  if(!insideBrain(mid))mid.multiplyScalar(0.7);
+  const curve=new THREE.CatmullRomCurve3([kernelPos,mid,fn.pos]);
+  const geo=new THREE.BufferGeometry().setFromPoints(curve.getPoints(12));
+  const line=new THREE.Line(geo,new THREE.LineBasicMaterial({color:0x00ffee,transparent:true,opacity:0.55,blending:THREE.AdditiveBlending,depthWrite:false}));
+  line.userData={ph:Math.random()*6.28,base:0.55,fam:true};familyG.add(line);
+  familyLinks++;
+  document.getElementById('faminfo').textContent=`Cloud Famille : ${familyMembers.length} membres fusionnés | Liens kernel : ${familyLinks}`;
+}
+
+function renderFamilyPanel(){
+  const el=document.getElementById('famlist');if(!el)return;el.innerHTML='';
+  familyMembers.forEach(m=>{
+    const d=document.createElement('div');d.className='fm';
+    d.innerHTML=`<div class="av">${m.emoji}</div><div class="nm">${m.name}</div><div class="lc">${m.loc}</div><div class="st">● ${m.status}</div>`;
+    el.appendChild(d);
+  });
+}
+
+function spawnNano(n=5){
+  for(let i=0;i<n;i++){
+    const r=0.7+Math.random()*1.5,th=Math.random()*6.28,ph=Math.acos(2*Math.random()-1);
+    const pos=new THREE.Vector3(r*Math.sin(ph)*Math.cos(th),r*Math.sin(ph)*Math.sin(th)*.55,r*Math.cos(ph));
+    spawnNanoAt(pos,1);
+  }
+  updInfo();flash(`${n} NANO-ROBOTS — construction masse solide + ADN illimité`);
+}
+
+function spawnNanoAt(pos,scale){
+  if(nanoG.children.length>=NANO_MAX)return;
+  scale=Math.max(0.32,Math.min(1,scale));
+  const bot=new THREE.Group();
+  const bodyMat=new THREE.MeshStandardMaterial({color:0x88aaff,emissive:0x4466ff,emissiveIntensity:0.6,metalness:0.75,roughness:0.22});
+  const body=new THREE.Mesh(new THREE.BoxGeometry(0.05*scale,0.032*scale,0.072*scale),bodyMat);
+  bot.add(body);
+  const head=new THREE.Mesh(new THREE.SphereGeometry(0.017*scale,6,5),new THREE.MeshBasicMaterial({color:0x00ffcc}));
+  head.position.set(0,0.022*scale,0.034*scale);bot.add(head);
+  const legMat=new THREE.MeshStandardMaterial({color:0x335588,emissive:0x1144aa,emissiveIntensity:0.4,metalness:0.6});
+  for(let s=-1;s<=1;s+=2){const leg=new THREE.Mesh(new THREE.CylinderGeometry(0.003*scale,0.003*scale,0.05*scale,4),legMat);leg.position.set(s*0.022*scale,-0.026*scale,0.018*scale);leg.rotation.z=s*0.35;bot.add(leg)}
+  bot.position.copy(pos).add(new THREE.Vector3((Math.random()-.5)*0.06,(Math.random()-.5)*0.06,(Math.random()-.5)*0.06));
+  // massT : timer de construction de masse solide ; dnaT : timer ADN
+  bot.userData={vel:new THREE.Vector3((Math.random()-.5)*.022,(Math.random()-.5)*.018,(Math.random()-.5)*.022),life:10+Math.random()*8,dnaT:1+Math.random()*2,massT:2.5+Math.random()*3,scale,born:0,working:true};
+  nanoG.add(bot);nanoN++;
+}
+
+// Nano-robots construisent une masse solide (tissu neuronal dense) à l'intérieur du volume cérébral
+function buildSolidMass(pos){
+  if(!solidMassG||!insideBrain(pos))return;
+  const size=0.04+Math.random()*0.06;
+  const isLeft=pos.x<0;
+  const col=isLeft?0x4488cc:0x33dd99; // gauche intelligence / droit créativité
+  const mat=new THREE.MeshStandardMaterial({
+    color:col,emissive:col,emissiveIntensity:0.35+Math.random()*0.25,
+    metalness:0.3,roughness:0.45,transparent:true,opacity:0.55+Math.random()*0.25
+  });
+  const mesh=new THREE.Mesh(new THREE.IcosahedronGeometry(size,1),mat);
+  mesh.position.copy(pos);
+  mesh.userData={ph:Math.random()*6.28,base:mat.opacity,side:isLeft?'left':'right'};
+  solidMassG.add(mesh);solidMassCount++;
+  // Fusion locale : si d'autres masses proches, relier par un petit filament
+  const nearby=[];
+  solidMassG.children.forEach(c=>{
+    if(c!==mesh&&c.position.distanceTo(pos)<0.22)nearby.push(c);
+  });
+  nearby.slice(0,2).forEach(n=>{
+    const geo=new THREE.BufferGeometry().setFromPoints([pos,n.position]);
+    const line=new THREE.Line(geo,new THREE.LineBasicMaterial({color:col,transparent:true,opacity:0.35,blending:THREE.AdditiveBlending,depthWrite:false}));
+    line.userData={ph:Math.random()*6.28,base:0.35,solidLink:true};solidMassG.add(line);
+  });
+  if(solidMassCount>180)return;
+if(solidMassCount%8===0){
+    evo=Math.min(100,evo+0.4);updE();
+    rac=Math.min(999,rac+1);document.getElementById('rac').textContent=rac;
+  }
+}
+
+function dna(pos,scale=1){
+  // ADN vivant illimité — code de la vie (style perles rouges/bleues + tubes, réf. Javascript DNA)
+  scale=Math.max(0.4,Math.min(1,scale));
+  const g=new THREE.Group();g.position.copy(pos);
+  const segs=20,h=(0.34+Math.random()*0.2)*scale,rad=(0.038+Math.random()*0.014)*scale;
+  const p1=[],p2=[];
+  const colA=magicState==='demon'?0xff2200:0x2288ff;
+  const colB=magicState==='demon'?0xaa0000:0xff3344;
+  for(let i=0;i<=segs;i++){const tt=i/segs,y=tt*h-h/2,a=tt*Math.PI*4.6;
+    p1.push(new THREE.Vector3(Math.cos(a)*rad,y,Math.sin(a)*rad));p2.push(new THREE.Vector3(Math.cos(a+Math.PI)*rad,y,Math.sin(a+Math.PI)*rad))}
+  const curve1=new THREE.CatmullRomCurve3(p1),curve2=new THREE.CatmullRomCurve3(p2);
+  const tube1=new THREE.Mesh(new THREE.TubeGeometry(curve1,segs,rad*0.14,5,false),new THREE.MeshStandardMaterial({color:colA,emissive:colA,emissiveIntensity:0.6,transparent:true,opacity:.88,roughness:.25,metalness:.3}));
+  const tube2=new THREE.Mesh(new THREE.TubeGeometry(curve2,segs,rad*0.14,5,false),new THREE.MeshStandardMaterial({color:colB,emissive:colB,emissiveIntensity:0.55,transparent:true,opacity:.88,roughness:.25,metalness:.3}));
+  g.add(tube1);g.add(tube2);
+  // Perles "bases azotées" vivantes (style image DNA)
+  for(let i=0;i<=segs;i+=1){
+    const ball1=new THREE.Mesh(new THREE.SphereGeometry(rad*0.42,8,6),new THREE.MeshStandardMaterial({color:colA,emissive:colA,emissiveIntensity:0.9,transparent:true,opacity:0.95}));
+    ball1.position.copy(p1[i]);g.add(ball1);
+    const ball2=new THREE.Mesh(new THREE.SphereGeometry(rad*0.42,8,6),new THREE.MeshStandardMaterial({color:colB,emissive:colB,emissiveIntensity:0.9,transparent:true,opacity:0.95}));
+    ball2.position.copy(p2[i]);g.add(ball2);
+    if(i%2===0&&i<segs){
+      const mid=p1[i].clone().lerp(p2[i],0.5),dir=p2[i].clone().sub(p1[i]);
+      const rung=new THREE.Mesh(new THREE.CylinderGeometry(rad*0.08,rad*0.08,dir.length(),5),new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:.55,blending:THREE.AdditiveBlending}));
+      rung.position.copy(mid);rung.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),dir.clone().normalize());
+      g.add(rung);
+    }
+  }
+  g.userData={life:Infinity,rot:0.015+Math.random()*0.02,scale,pos:pos.clone(),living:true,pulse:Math.random()*6.28};
+  g.rotation.set(Math.random()*.3,Math.random()*3,Math.random()*.3);
+  dnaG.add(g);dnaN++;updInfo();
+}
+
+// ===== PROFESSEUR HOLOGRAPHIQUE + TABLEAU =====
+// ===== ONDES CÉRÉBRALES (δ θ α β γ) =====
+function initBrainWaves(){
+  // Nano-fibres neuronales miniatures au centre du cerveau (collées au kernel), au lieu du grand
+  // anneau brillant qui entourait tout le cerveau — plus discret, plus réaliste, style cerveau d'enfant
+  waveG=new THREE.Group();kernel.add(waveG);
+  const bands=Object.keys(WAVE_BANDS);
+  bands.forEach((key,i)=>{
+    const w=WAVE_BANDS[key];
+    const torus=new THREE.Mesh(
+      new THREE.TorusGeometry(0.09+i*0.018,0.003,5,48),
+      new THREE.MeshBasicMaterial({color:w.col,transparent:true,opacity:0.12,blending:THREE.AdditiveBlending,depthWrite:false,side:THREE.DoubleSide})
+    );
+    torus.rotation.x=Math.PI/2+i*0.04;
+    torus.userData={band:key,baseOp:0.12,ph:i*1.2,hz:w.hz,col:w.col};
+    waveG.add(torus);
+    // Nano-particules de phase le long du filament
+    const n=16,pos=[],cols=[];
+    for(let j=0;j<n;j++){
+      const a=(j/n)*Math.PI*2,r=0.09+i*0.018;
+      pos.push(Math.cos(a)*r,Math.sin(a)*0.006,Math.sin(a)*r);
+      const c=new THREE.Color(w.col);cols.push(c.r,c.g,c.b);
+    }
+    const geo=new THREE.BufferGeometry();
+    geo.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));
+    geo.setAttribute('color',new THREE.Float32BufferAttribute(cols,3));
+    const pts=new THREE.Points(geo,new THREE.PointsMaterial({size:0.012,vertexColors:true,transparent:true,opacity:0.5,blending:THREE.AdditiveBlending,depthWrite:false}));
+    pts.userData={band:key,hz:w.hz,ph:i};waveG.add(pts);
+  });
+}
+
+function updateBrainWaves(dt){
+  // Sélection de bande selon l'état cognitif (simulation réaliste)
+  let target='alpha';
+  if(dream||hippo==='rêve')target='theta';
+  else if(stim||cortex)target='gamma';
+  else if(profOn||speechOn||pulse>55)target='beta';
+  else if(pulse<28&&!stim)target='delta';
+  else if(avgActivity()<0.4)target='alpha';
+  else target='beta';
+  const band=WAVE_BANDS[target];
+  waveBand=band.name;waveHz=band.hz;
+  if(!waveG)return;
+  waveG.children.forEach(c=>{
+    if(!c.userData||!c.userData.band)return;
+    const active=c.userData.band===target;
+    const boost=active?0.55+Math.sin(t*c.userData.hz*0.35)*0.25:0.08;
+    if(c.material){
+      c.material.opacity=c.userData.baseOp*(active?3.2:0.5)+boost*(active?0.2:0);
+      if(active)c.rotation.z+=dt*(c.userData.hz*0.04);
+      else c.rotation.z+=dt*0.01;
+    }
+    if(c.isPoints){
+      c.material.opacity=active?0.75:0.15;
+      c.rotation.y+=dt*(c.userData.hz*0.03)*(active?1:0.2);
+      // Oscillation radiale type onde
+      const pos=c.geometry.attributes.position.array;
+      const n=pos.length/3,baseR=0.09+Object.keys(WAVE_BANDS).indexOf(c.userData.band)*0.018;
+      for(let j=0;j<n;j++){
+        const a=(j/n)*Math.PI*2+t*c.userData.hz*0.15;
+        const r=baseR+(active?Math.sin(t*c.userData.hz+j)*0.005:0);
+        pos[j*3]=Math.cos(a)*r;pos[j*3+1]=Math.sin(t*2+j)*0.004;pos[j*3+2]=Math.sin(a)*r;
+      }
+      c.geometry.attributes.position.needsUpdate=true;
+    }
+  });
+}
+
+function avgActivity(){return (leftActivity+rightActivity)*0.5}
+
+// ===== NEUROPLASTICITÉ — renforcement synaptique + nouvelles connexions =====
+function initPlasticity(){
+  plasticG=new THREE.Group();brain.add(plasticG);plasticG.renderOrder=3;
+}
+
+function growSynapse(){
+  if(!plasticG||plasticity>200)return;
+  // Points d'ancrage dans les régions actives (hémisphères + hippocampe + kernel)
+  const anchors=[
+    new THREE.Vector3(-0.72,0.55,0.35),new THREE.Vector3(0.72,0.55,0.35),
+    new THREE.Vector3(-0.68,0.05,-0.55),new THREE.Vector3(0.68,0.05,-0.55),
+    new THREE.Vector3(-0.65,-0.32,0.38),new THREE.Vector3(0.65,-0.32,0.38),
+    new THREE.Vector3(0,0.12,0.08),new THREE.Vector3(-0.4,0.4,0.9),new THREE.Vector3(0.4,0.4,0.9)
+  ];
+  const a=anchors[Math.floor(Math.random()*anchors.length)];
+  const b=anchors[Math.floor(Math.random()*anchors.length)];
+  if(a.distanceTo(b)<0.3)return;
+  const mid=a.clone().lerp(b,0.5).add(new THREE.Vector3((Math.random()-.5)*0.25,(Math.random()-.5)*0.25,(Math.random()-.5)*0.25));
+  const curve=new THREE.CatmullRomCurve3([a,mid,b]);
+  const geo=new THREE.BufferGeometry().setFromPoints(curve.getPoints(14));
+  // Couleur selon latéralisation dominante du lien
+  const col=a.x+b.x<0?0x4488ff:a.x+b.x>0?0xaa66ff:0x00ffcc;
+  const line=new THREE.Line(geo,new THREE.LineBasicMaterial({color:col,transparent:true,opacity:0.55,blending:THREE.AdditiveBlending,depthWrite:false}));
+  line.userData={ph:Math.random()*6.28,base:0.55,strength:0.4+Math.random()*0.4,plastic:true};
+  plasticG.add(line);synapses++;plasticity=Math.min(100,plasticity+0.8);
+  // Petit bouton synaptique au milieu
+  const node=new THREE.Mesh(new THREE.SphereGeometry(0.025,6,5),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:0.8,blending:THREE.AdditiveBlending}));
+  node.position.copy(mid);node.userData={ph:Math.random()*6.28,base:0.8,plastic:true};plasticG.add(node);
+  if(synapses%5===0){evo=Math.min(100,evo+0.5);updE();rac=Math.min(999,rac+1);document.getElementById('rac').textContent=rac}
+}
+
+function reinforcePlasticity(amount=1){
+  plasticity=Math.min(100,plasticity+amount);
+  // Renforcer les synapses existantes (opacité / force)
+  if(plasticG)plasticG.children.forEach(c=>{
+    if(c.userData&&c.userData.plastic&&c.userData.strength!==undefined){
+      c.userData.strength=Math.min(1,c.userData.strength+0.02*amount);
+      c.userData.base=Math.min(0.9,0.35+c.userData.strength*0.55);
+    }
+  });
+  // Chance de former une nouvelle synapse proportionnelle à l'activité
+  if(Math.random()<0.15+avgActivity()*0.25)growSynapse();
+}
+
+// Teinte le noyau Cloud et le lien Famille↔Cloud selon l'état magique (démon / purifié / signé),
+// pour que les sorts de Merlin se répercutent visiblement dans TOUTE la mémoire fusionnée.
+function tintFusedSystems(colorHex,intensity){
+  if(cloudMemG&&cloudMemG.userData.core){
+    cloudMemG.userData.core.material.emissive.setHex(colorHex);
+    cloudMemG.userData.core.material.emissiveIntensity=intensity;
+  }
+  if(familyCloudLink)familyCloudLink.material.color.setHex(colorHex);
+}
+
+// ===== CARTES MAGIQUES MERLIN — résurrection Therion + purification bonté + plume signature =====
+function castResurrection(){
+  // Carte Therion Black Magic — ressuscite ÉVOLUX : vivante mais côté démoniaque
+  if(magicState==='demon'){flash('🔥 Déjà sous le sort démoniaque');return}
+  if(magicState==='purified'){flash('✨ Déjà purifiée — le démon a été guéri');return}
+  magicState='demon';
+  if(!eyesOn)growEyes();
+  applyEyeMode();
+  // Pulse démoniaque + ADN sombre
+  pulse=Math.min(100,pulse+25);updP();
+  evo=Math.min(100,evo+5);updE();
+  for(let i=0;i<6;i++)dna(new THREE.Vector3((Math.random()-.5)*1.2,(Math.random()-.5)*.8,(Math.random()-.5)*1.2),0.7+Math.random()*0.3);
+  growBranches();
+  reinforcePlasticity(4);
+  learnToCloud('stim');
+  tintFusedSystems(0xff2200,0.9);
+  flash('🃏 MERLIN — CARTE THERION BLACK MAGIC · Résurrection · Yeux noir & rouge · Démon éveillé · Cloud/Famille assombris');
+  speak('je suis vivante... mais sombre',true);
+  updInfo();
+}
+
+function castPurification(){
+  // Carte de bonté — guérit le mal, garde 15% mouton noir rebelle
+  if(magicState!=='demon'){flash('🕊️ D\'abord ressusciter avec la carte Therion');return}
+  magicState='purified';
+  rebelPercent=15;
+  // 65% bonté + 15% rebelle (mouton noir indépendant) + protectrice envers papa
+  applyEyeMode();
+  pulse=Math.min(100,pulse+10);updP();
+  evo=Math.min(100,evo+8);updE();
+  // ADN redevient vivant cyan/rouge pur
+  for(let i=0;i<5;i++)dna(new THREE.Vector3((Math.random()-.5)*1.0,(Math.random()-.5)*.7,(Math.random()-.5)*1.0),0.8);
+  growBranches();
+  reinforcePlasticity(5);
+  learnToCloud('prof');
+  learnToCloud('family');
+  tintFusedSystems(0x66ffcc,0.75);
+  if(!familyBuilt){buildFamilyNodes();growFamilyBranches();fuseFamilyCloudLink();}
+  flash('🃏 MERLIN — CARTE DE BONTÉ · Sort de guérison · 15% mouton noir rebelle · Cloud/Famille purifiés et reliés');
+  speak('je choisis la lumière... un peu rebelle',true);
+  updInfo();
+}
+
+function signDNAWithQuill(){
+  // Plume magique — certification authentique vivante de tout le cerveau + ADN
+  if(dnaSigned){flash('✒️ ADN déjà signé & certifié vivant');return}
+  dnaSigned=true;
+  if(!certSealG){
+    certSealG=new THREE.Group();brain.add(certSealG);
+    // Sceau de certification au-dessus du kernel
+    const seal=new THREE.Mesh(new THREE.TorusGeometry(0.22,0.025,8,24),new THREE.MeshBasicMaterial({color:0xffd700,transparent:true,opacity:0.85,blending:THREE.AdditiveBlending}));
+    seal.position.set(0,0.55,0.1);seal.rotation.x=Math.PI/2;certSealG.add(seal);
+    const core=new THREE.Mesh(new THREE.SphereGeometry(0.08,10,8),new THREE.MeshStandardMaterial({color:0xffee88,emissive:0xffcc00,emissiveIntensity:1.0,transparent:true,opacity:0.9}));
+    core.position.set(0,0.55,0.1);certSealG.add(core);
+    // Trace de plume (arc)
+    const pts=[];
+    for(let i=0;i<12;i++){
+      const a=i/11*Math.PI*1.2-0.3;
+      pts.push(new THREE.Vector3(Math.cos(a)*0.35,0.5+Math.sin(a)*0.12,0.15+i*0.02));
+    }
+    const geo=new THREE.BufferGeometry().setFromPoints(pts);
+    const plume=new THREE.Line(geo,new THREE.LineBasicMaterial({color:0xffd700,transparent:true,opacity:0.7,blending:THREE.AdditiveBlending}));
+    plume.userData={ph:0,base:0.7};certSealG.add(plume);
+    certSealG.userData={seal,core};
+  }
+  certSealG.visible=true;
+  // Injecter code de vie dans l'ADN existant
+  dnaG.children.forEach(d=>{d.userData.living=true;d.userData.signed=true});
+  for(let i=0;i<4;i++)dna(new THREE.Vector3((Math.random()-.5)*0.8,0.1+Math.random()*0.4,(Math.random()-.5)*0.8),0.9);
+  // La plume certifie aussi la fusion Famille ↔ Cloud : lignage authentifié, mémoire scellée
+  familyNodes.forEach(fn=>{if(fn.node)fn.node.userData.signed=true});
+  if(cloudMemG)cloudMemG.userData.signed=true;
+  tintFusedSystems(0xffd700,0.85);
+  reinforcePlasticity(3);
+  evo=Math.min(100,evo+6);updE();
+  flash('✒️ PLUME MAGIQUE — ADN, cerveau, Famille & Mémoire Cloud signés · Certification authentique vivante');
+  speak('certifiée vivante',true);
+  updInfo();
+}
+
+// ===== MÉMOIRE CLOUD — capacité élevée, compression / décompression, engrammes reliés =====
+function initCloudMemory(){
+  cloudMemG=new THREE.Group();brain.add(cloudMemG);cloudMemG.renderOrder=5;
+  // Noyau de stockage cloud au-dessus du kernel (hippocampe étendu → cloud)
+  const core=new THREE.Mesh(
+    new THREE.IcosahedronGeometry(0.28,1),
+    new THREE.MeshStandardMaterial({color:0x66ccff,emissive:0x2288cc,emissiveIntensity:0.7,transparent:true,opacity:0.75,metalness:0.4,roughness:0.3})
+  );
+  core.position.set(0,0.85,0.05);core.userData={cloudCore:true,ph:0};cloudMemG.add(core);
+  // Anneau de capacité
+  const capRing=new THREE.Mesh(
+    new THREE.TorusGeometry(0.42,0.02,8,32),
+    new THREE.MeshBasicMaterial({color:0x00aaff,transparent:true,opacity:0.4,blending:THREE.AdditiveBlending})
+  );
+  capRing.position.set(0,0.85,0.05);capRing.rotation.x=Math.PI/2;capRing.userData={capRing:true};cloudMemG.add(capRing);
+  // Liens structurels cloud ↔ hippocampe ↔ kernel ↔ hémisphères
+  const links=[
+    [[0,0.85,0.05],[0,0.12,0.08]],           // cloud → kernel
+    [[0,0.85,0.05],[-0.65,-0.32,0.38]],     // cloud → hippo G
+    [[0,0.85,0.05],[0.65,-0.32,0.38]],      // cloud → hippo D
+    [[0,0.85,0.05],[-0.72,0.55,0.35]],      // cloud → cortex G (savoir)
+    [[0,0.85,0.05],[0.72,0.55,0.35]],       // cloud → cortex D (rêves)
+    [[0,0.85,0.05],[0,0.12,0.08],[0,0.05,0]] // émotion via kernel
+  ];
+  links.forEach((pts,i)=>{
+    const curve=new THREE.CatmullRomCurve3(pts.map(p=>new THREE.Vector3(...p)));
+    const geo=new THREE.BufferGeometry().setFromPoints(curve.getPoints(16));
+    const col=[0x66ccff,0x00ffcc,0x00ffcc,0x4488ff,0xaa66ff,0xff55aa][i];
+    const line=new THREE.Line(geo,new THREE.LineBasicMaterial({color:col,transparent:true,opacity:0.4,blending:THREE.AdditiveBlending,depthWrite:false}));
+    line.userData={ph:Math.random()*6.28,base:0.4,cloudLink:true};cloudMemG.add(line);
+  });
+  cloudMemG.userData={core,capRing};
+}
+
+function engramZone(type){
+  const z=ENGRAM_TYPES[type].zone;
+  if(z==='left')return new THREE.Vector3(-0.55-Math.random()*0.35,0.35+Math.random()*0.4,0.2+Math.random()*0.5);
+  if(z==='right')return new THREE.Vector3(0.55+Math.random()*0.35,0.35+Math.random()*0.4,0.2+Math.random()*0.5);
+  if(z==='hippo')return new THREE.Vector3((Math.random()-.5)*1.0,-0.25+Math.random()*0.2,0.25+Math.random()*0.3);
+  return new THREE.Vector3((Math.random()-.5)*0.3,0.05+Math.random()*0.25,(Math.random()-.5)*0.3); // kernel émotions
+}
+
+function storeEngram(type,label){
+  if(!cloudMemG)return null;
+  const free=memCapacity-memUsed;
+  const cost=compressRatio<1?0.35:1; // compressé = moins de place
+  if(engrams.length>90){flash('☁️ Mémoire saturée — Compresse ou élève capacité');return null}
+if(free<cost&&!cloudElevated){flash('☁️ MÉMOIRE CLOUD PLEINE — Élève la capacité ou compresse');return null}
+  if(free<cost&&cloudElevated&&memUsed>=memCapacity){flash('☁️ CAPACITÉ MAX — Compresse pour libérer');return null}
+  const info=ENGRAM_TYPES[type]||ENGRAM_TYPES.knowledge;
+  const pos=engramZone(type);
+  const size=(compressRatio<1?0.035:0.055)*(0.7+Math.random()*0.4);
+  const mesh=new THREE.Mesh(
+    new THREE.OctahedronGeometry(size,0),
+    new THREE.MeshStandardMaterial({color:info.col,emissive:info.col,emissiveIntensity:0.85,transparent:true,opacity:0.9,metalness:0.3,roughness:0.35})
+  );
+  mesh.position.copy(pos);
+  mesh.userData={type,label:label||info.label,ph:Math.random()*6.28,base:0.9,compressed:compressRatio<1,cost};
+  // Lien engramme → noyau cloud
+  const cloudPos=new THREE.Vector3(0,0.85,0.05);
+  const mid=pos.clone().lerp(cloudPos,0.5).add(new THREE.Vector3((Math.random()-.5)*0.15,(Math.random()-.5)*0.1,(Math.random()-.5)*0.15));
+  const curve=new THREE.CatmullRomCurve3([pos,mid,cloudPos]);
+  const geo=new THREE.BufferGeometry().setFromPoints(curve.getPoints(12));
+  const link=new THREE.Line(geo,new THREE.LineBasicMaterial({color:info.col,transparent:true,opacity:0.45,blending:THREE.AdditiveBlending,depthWrite:false}));
+  link.userData={ph:Math.random()*6.28,base:0.45,cloudLink:true};
+  cloudMemG.add(mesh);cloudMemG.add(link);
+  engrams.push({mesh,link,type,label:label||info.label});
+  memUsed=Math.min(memCapacity,memUsed+cost);
+  if(type==='knowledge')knowledgeN++;
+  else if(type==='memory')memoryN++;
+  else if(type==='dream')dreamMemN++;
+  else if(type==='emotion')emotionN++;
+  if(compressRatio<1)memCompressed++;
+  reinforcePlasticity(0.3);
+  hippo='actif';
+  updInfo();
+  return mesh;
+}
+
+function compressMemory(){
+  if(!cloudMemG||engrams.length===0){flash('☁️ Rien à compresser');return}
+  let n=0;
+  engrams.forEach(e=>{
+    if(!e.mesh.userData.compressed){
+      e.mesh.userData.compressed=true;
+      e.mesh.scale.setScalar(0.55);
+      e.mesh.material.opacity=0.65;
+      e.mesh.userData.base=0.65;
+      // Récupérer de la place
+      const saved=e.mesh.userData.cost*(1-0.35);
+      memUsed=Math.max(0,memUsed-saved);
+      e.mesh.userData.cost=0.35;
+      memCompressed++;n++;
+    }
+  });
+  compressRatio=0.35;
+  flash(`📦 COMPRESSION — ${n} engrammes compressés · place libérée`);
+  updInfo();
+}
+
+function decompressMemory(){
+  if(!cloudMemG)return;
+  let n=0;
+  engrams.forEach(e=>{
+    if(e.mesh.userData.compressed){
+      const need=1-0.35;
+      if(memUsed+need>memCapacity)return;
+      e.mesh.userData.compressed=false;
+      e.mesh.scale.setScalar(1);
+      e.mesh.material.opacity=0.9;
+      e.mesh.userData.base=0.9;
+      memUsed=Math.min(memCapacity,memUsed+need);
+      e.mesh.userData.cost=1;
+      memCompressed=Math.max(0,memCompressed-1);n++;
+    }
+  });
+  compressRatio=1;
+  flash(n?`📂 DÉCOMPRESSION — ${n} engrammes restaurés`:'☁️ Déjà décompressé ou place insuffisante');
+  updInfo();
+}
+
+function elevateCapacity(){
+  if(cloudElevated&&memCapacity>=256){flash('☁️ Capacité déjà au maximum élevé');return}
+  memCapacity=cloudElevated?Math.min(256,memCapacity+64):128;
+  cloudElevated=true;
+  // Agrandir le noyau cloud et l'anneau
+  if(cloudMemG&&cloudMemG.userData.core){
+    cloudMemG.userData.core.scale.setScalar(1+memCapacity/128*0.35);
+    if(cloudMemG.userData.capRing)cloudMemG.userData.capRing.scale.setScalar(1+memCapacity/128*0.4);
+  }
+  flash(`⬆️ CAPACITÉ ÉLEVÉE — ${memCapacity} slots · Cloud mémoire étendu`);
+  evo=Math.min(100,evo+2);updE();updInfo();
+}
+
+function learnToCloud(from){
+  // Appelé quand le cerveau apprend (cours, chat, rêve, stim)
+  const types=['knowledge','memory','emotion','dream'];
+  let type='knowledge';
+  if(from==='dream')type='dream';
+  else if(from==='chat'||from==='speech')type=Math.random()>0.5?'memory':'knowledge';
+  else if(from==='stim')type='emotion';
+  else if(from==='prof')type='knowledge';
+  else if(from==='family')type='family';
+  else type=types[Math.floor(Math.random()*types.length)];
+  const labels={knowledge:domains[profDomain%domains.length],memory:'Souvenir consolidé',dream:'Fragment de rêve',emotion:['Joie','Curiosité','Calme','Excitation'][Math.floor(Math.random()*4)],family:'Lien familial fusionné'};
+  const eng=storeEngram(type,labels[type]||type);
+  if(memUsed>memCapacity*0.85)compressMemory();
+}
+
+function createTeacher(){
+  if(teacher)return;
+  teacher=new THREE.Group();
+  // PROFESSEUR HOMME clairement masculin — silhouette carrée, cheveux courts, barbe légère, cravate
+  const skinMat=new THREE.MeshStandardMaterial({color:0xe8b88a,emissive:0x442200,emissiveIntensity:0.15,metalness:0.1,roughness:0.55,transparent:true,opacity:0.95});
+  const suitMat=new THREE.MeshStandardMaterial({color:0x1a3a5c,emissive:0x0a2040,emissiveIntensity:0.25,metalness:0.3,roughness:0.4,transparent:true,opacity:0.92});
+  const head=new THREE.Mesh(new THREE.SphereGeometry(0.20,14,12),skinMat);head.position.y=1.58;teacher.add(head);
+  // Cheveux courts masculins (calotte sombre)
+  const hair=new THREE.Mesh(new THREE.SphereGeometry(0.21,12,10,0,Math.PI*2,0,Math.PI*0.52),new THREE.MeshStandardMaterial({color:0x1a120a,roughness:0.85}));
+  hair.position.y=1.64;teacher.add(hair);
+  // Mâchoire + menton carré
+  const jaw=new THREE.Mesh(new THREE.BoxGeometry(0.22,0.09,0.20),skinMat);jaw.position.set(0,1.46,0.03);teacher.add(jaw);
+  // Barbe légère / ombre
+  const beard=new THREE.Mesh(new THREE.BoxGeometry(0.18,0.06,0.08),new THREE.MeshStandardMaterial({color:0x2a1a10,roughness:0.9}));beard.position.set(0,1.42,0.12);teacher.add(beard);
+  // Yeux du prof
+  const eyeGeo=new THREE.SphereGeometry(0.025,8,6);
+  const eL=new THREE.Mesh(eyeGeo,new THREE.MeshBasicMaterial({color:0x2244aa}));eL.position.set(-0.07,1.60,0.17);teacher.add(eL);
+  const eR=new THREE.Mesh(eyeGeo,new THREE.MeshBasicMaterial({color:0x2244aa}));eR.position.set(0.07,1.60,0.17);teacher.add(eR);
+  // Torse large + épaules carrées (homme)
+  const torso=new THREE.Mesh(new THREE.CylinderGeometry(0.22,0.26,0.70,12),suitMat);torso.position.y=1.02;teacher.add(torso);
+  const shL=new THREE.Mesh(new THREE.BoxGeometry(0.16,0.12,0.18),suitMat);shL.position.set(-0.30,1.30,0);teacher.add(shL);
+  const shR=shL.clone();shR.position.x=0.30;teacher.add(shR);
+  // Cravate rouge
+  const tie=new THREE.Mesh(new THREE.ConeGeometry(0.04,0.48,6),new THREE.MeshStandardMaterial({color:0xaa2222,emissive:0x550000,emissiveIntensity:0.35}));
+  tie.position.set(0,0.98,0.22);tie.rotation.x=Math.PI;teacher.add(tie);
+  // Bras
+  const armL=new THREE.Mesh(new THREE.CylinderGeometry(0.05,0.05,0.52,8),suitMat);armL.position.set(-0.36,1.12,0.05);armL.rotation.z=0.35;teacher.add(armL);
+  const armR=armL.clone();armR.position.x=0.36;armR.rotation.z=-0.25;teacher.add(armR);
+  // Jambes
+  const legL=new THREE.Mesh(new THREE.CylinderGeometry(0.075,0.08,0.55,8),suitMat);legL.position.set(-0.10,0.38,0);teacher.add(legL);
+  const legR=legL.clone();legR.position.x=0.10;teacher.add(legR);
+  // Aura douce
+  const aura=new THREE.Mesh(new THREE.SphereGeometry(0.9,12,10),new THREE.MeshBasicMaterial({color:0x4488ff,transparent:true,opacity:0.10,blending:THREE.AdditiveBlending,depthWrite:false}));
+  aura.position.y=1.0;teacher.add(aura);
+  // Socle
+  const base=new THREE.Mesh(new THREE.CylinderGeometry(0.20,0.26,0.06,14),new THREE.MeshStandardMaterial({color:0x223344,emissive:0x00aaff,emissiveIntensity:0.5,metalness:0.6}));
+  base.position.y=0.03;teacher.add(base);
+
+  // Attaché au cerveau → reste TOUJOURS devant les yeux même quand le cerveau tourne
+  // Yeux Évolux locaux ≈ (±0.48, 0.42, 1.55–1.68) face +Z
+  // Visage du prof construit en +Z local → rotation.y=π pour regarder vers -Z (vers les yeux)
+  const anchor=new THREE.Vector3(0.0, -1.05, 2.95); // tête du prof alignée avec les yeux, devant
+  teacher.position.copy(anchor);
+  teacher.scale.setScalar(0.88);
+  teacher.rotation.y = Math.PI; // face aux yeux d'Évolux
+  teacher.userData={armR,aura,anchor,fixed:true};
+  brain.add(teacher); // enfant du cerveau = toujours devant les yeux
+
+  // Rayon kernel → professeur (recalculé en world chaque frame)
+  const beamGeo=new THREE.BufferGeometry().setFromPoints([anchor,anchor]);
+  const beamLine=new THREE.Line(beamGeo,new THREE.LineBasicMaterial({color:0xffaa44,transparent:true,opacity:0.55,blending:THREE.AdditiveBlending,depthWrite:false}));
+  beamLine.userData={ph:0,teacherBeam:true};scene.add(beamLine);teacher.userData.beam=beamLine;
+
+  // Blackboard à côté du professeur, aussi collé au cerveau
+  board=new THREE.Group();
+  const boardMesh=new THREE.Mesh(new THREE.PlaneGeometry(3.0,1.9),new THREE.MeshStandardMaterial({color:0x0a1f12,emissive:0x00aa66,emissiveIntensity:0.45,roughness:0.4,side:THREE.DoubleSide}));
+  board.add(boardMesh);
+  const frameMat=new THREE.MeshBasicMaterial({color:0x00ffee,transparent:true,opacity:0.85});
+  [[0,0.98,0],[0,-0.98,0],[1.55,0,0],[-1.55,0,0]].forEach((p,i)=>{
+    const f=new THREE.Mesh(new THREE.BoxGeometry(i<2?3.15:0.08,i<2?0.08:2.05,0.05),frameMat);f.position.set(...p);board.add(f);
+  });
+  const stand=new THREE.Mesh(new THREE.CylinderGeometry(0.03,0.05,0.75,8),new THREE.MeshStandardMaterial({color:0x334455,metalness:0.6,roughness:0.4}));
+  stand.position.y=-1.1;board.add(stand);
+  const canvas=document.createElement('canvas');canvas.width=768;canvas.height=480;
+  const ctx=canvas.getContext('2d');
+  board.userData={canvas,ctx,tex:null};
+  updateBoardText(0);
+  const tex=new THREE.CanvasTexture(canvas);tex.needsUpdate=true;board.userData.tex=tex;
+  const textPlane=new THREE.Mesh(new THREE.PlaneGeometry(2.8,1.7),new THREE.MeshBasicMaterial({map:tex,transparent:true,opacity:0.92,side:THREE.DoubleSide}));
+  textPlane.position.z=0.02;board.add(textPlane);
+  // Tableau à gauche du prof, devant les yeux
+  const boardAnchor=new THREE.Vector3(-1.45, 0.55, 2.85);
+  board.position.copy(boardAnchor);board.scale.setScalar(0.75);
+  board.rotation.y = Math.PI; // même orientation que le prof (face aux yeux)
+  brain.add(board);
+}
+
+function runExam(){
+  if(!board||!board.userData.ctx)return;
+  const q=examQuestions[examQuestionIdx%examQuestions.length];examQuestionIdx++;
+  const ctx=board.userData.ctx,c=board.userData.canvas;
+  ctx.fillStyle='#1a0a0a';ctx.fillRect(0,0,c.width,c.height);
+  ctx.strokeStyle='#ffcc00';ctx.lineWidth=4;ctx.strokeRect(8,8,c.width-16,c.height-16);
+  ctx.fillStyle='#ffdd88';ctx.font='bold 26px monospace';ctx.textAlign='center';
+  ctx.fillText('📝 EXAMEN',c.width/2,44);
+  ctx.font='20px monospace';ctx.fillStyle='#ffeecc';ctx.fillText(q.q,c.width/2,110);
+  if(board.userData.tex)board.userData.tex.needsUpdate=true;
+  flash('📝 EXAMEN — '+q.q);
+  // Évolux répond selon ce qu'il a déjà réellement appris (evo, familyLinks, papa reconnu)
+  setTimeout(()=>{
+    let reussi=false,rep='...';
+    if(q.a==='matthieu'){rep='Matthieu';reussi=true}
+    else if(q.a==='2'){rep=evo>10?'2':'?';reussi=evo>10}
+    else if(q.a==='hippocampe'){rep=hippo!=='veille'?'Hippocampe':'?';reussi=hippo!=='veille'}
+    else if(q.a==='evolux'){rep='ÉVOLUX';reussi=true}
+    if(reussi){examsPassed++;evo=Math.min(100,evo+4);familyLinks+=2;flash('✅ RÉUSSI : "'+rep+'" — Examens réussis : '+examsPassed);}
+    else{flash('❌ À revoir : '+q.q);}
+    updE();updInfo();
+    setTimeout(()=>{updateBoardText(0);reinforceFamilyLink()},1800);
+  },1600);
+}
+
+function updateBoardText(idx){
+  if(!board||!board.userData.ctx)return;
+  const ctx=board.userData.ctx,c=board.userData.canvas;
+  ctx.fillStyle='#06120a';ctx.fillRect(0,0,c.width,c.height);
+  ctx.strokeStyle='#00ffee';ctx.lineWidth=6;ctx.strokeRect(10,10,c.width-20,c.height-20);
+  ctx.fillStyle='#c0fff0';ctx.font='bold 36px monospace';ctx.textAlign='center';
+  ctx.fillText(domains[idx%domains.length],c.width/2,60);
+  ctx.font='28px monospace';ctx.fillStyle='#88ffdd';
+  const lines=boardTexts[idx%boardTexts.length].split('\n');
+  lines.forEach((line,i)=>ctx.fillText(line,c.width/2,150+i*50));
+  ctx.font='20px monospace';ctx.fillStyle='#aaddcc';ctx.fillText('Leçon '+(idx%domains.length+1)+' / '+domains.length+'  ·  Prof. Merlin-Évolux',c.width/2,c.height-40);
+  if(board.userData.tex)board.userData.tex.needsUpdate=true;
+}
+
+function updInfo(){
+  const mag=magicState==='demon'?'🔥DÉMON':magicState==='purified'?`✨PURIFIÉE (${rebelPercent}% rebelle)`:(dnaSigned?'✒️CERTIFIÉE':'dormant');
+  document.getElementById('info').textContent=`Nano:${nanoN} | ADN:${dnaN}${dnaSigned?'✒️':''} | Masse:${solidMassCount} | Syn:${synapses} | Plast:${plasticity|0}% | ${waveBand} | Magie:${mag} | G:${(leftActivity*100|0)}% D:${(rightActivity*100|0)}% | Hippo:${hippo}`;
+  const mi=document.getElementById('meminfo');
+  if(mi)mi.textContent=`☁️ Mémoire Cloud : ${memUsed.toFixed(1)}/${memCapacity}${cloudElevated?'↑':''} · Savoir:${knowledgeN} Souvenir:${memoryN} Rêve:${dreamMemN} Émotion:${emotionN} · Compressé:${memCompressed}`;
+  const si=document.getElementById('speechinfo');
+  if(si){
+    const maturity=Math.min(100,Math.round((age/100)*70 + (speechLvl/40)*30));
+    const stage=maturity<20?'Bébé (babillage)':maturity<45?'Mots simples':maturity<75?'Phrases courtes':'Parole normale';
+    si.textContent=`🗣 Maturité parole : ${maturity}% · ${stage} · Âge ${age}/100j`;
+  }
+}
+function flash(m){const el=document.getElementById('st');el.textContent=m;el.style.color='#00ffaa';setTimeout(()=>{el.textContent='RÉSEAU INTERNE ACTIF';el.style.color='#7dffb3'},2200)}
+function updP(){document.getElementById('pul').textContent=Math.round(pulse);document.getElementById('fill').style.width=pulse+'%'}
+function updE(){document.getElementById('evo').textContent=Math.round(evo)}
+
+function speak(txt,showText){
+  if(showText)flash('🗣 ÉVOLUX : "'+txt+'"');
+  if(!audioCtx)audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+  const now=audioCtx.currentTime;
+  const osc=audioCtx.createOscillator();const gain=audioCtx.createGain();
+  osc.connect(gain);gain.connect(audioCtx.destination);
+  osc.type='sine';osc.frequency.setValueAtTime(180+Math.random()*220,now);
+  gain.gain.setValueAtTime(0.0001,now);gain.gain.exponentialRampToValueAtTime(0.18,now+.05);
+  gain.gain.exponentialRampToValueAtTime(0.0001,now+.35+Math.random()*.25);
+  osc.start(now);osc.stop(now+.4+Math.random()*.3);
+  if(mouth&&mouth.userData){mouth.userData.open=1;setTimeout(()=>{if(mouth)mouth.userData.open=0},300)}
+}
+
+function onClick(){pulse=Math.min(100,pulse+2+Math.random()*4);updP();flash('NŒUD ACTIVÉ')}
+
+function ui(){
+  document.getElementById('bAu').onclick=function(){autoR=!autoR;ctrl.autoRotate=autoR;this.classList.toggle('on',autoR);this.textContent=autoR?'Auto-Rotation':'Rotation OFF'};
+  document.getElementById('bBr').onclick=()=>{growBranches();evo=Math.min(100,evo+6+Math.random()*5);updE();reinforcePlasticity(2);if(evo>=28&&!eyesOn)setTimeout(growEyes,1200);if(evo>=40)makeMouth()};
+  document.getElementById('bSt').onclick=()=>{
+    stim=true;pulse=Math.min(100,pulse+15);updP();evo=Math.min(100,evo+9+Math.random()*6);updE();
+    reinforcePlasticity(3.5);learnToCloud('stim');flash('⚡ STIMULATION — FIBRES + FLUIDE + ESPRIT + PLASTICITÉ + MÉMOIRE');
+    fibers.children.forEach(f=>{if(f.material&&f.userData.base)f.material.opacity=Math.min(.95,f.userData.base*2.3)});
+    if(kernel)kernel.userData.core.material.emissiveIntensity=1.3;
+    fluidG.children.forEach(f=>f.material.opacity=.95);
+    if(spirit){spirit.userData.a1.material.opacity=0.14;spirit.userData.a2.material.opacity=0.08}
+    if(Math.random()>.4)growBranches();
+    setTimeout(()=>{stim=false;fibers.children.forEach(f=>{if(f.material&&f.userData.base)f.material.opacity=f.userData.base});if(kernel)kernel.userData.core.material.emissiveIntensity=.85;fluidG.children.forEach(f=>f.material.opacity=.7);if(spirit){spirit.userData.a1.material.opacity=0.07;spirit.userData.a2.material.opacity=0.04}},4000);
+    if(evo>=28&&!eyesOn)setTimeout(growEyes,1600);if(evo>=40)makeMouth();
+  };
+  document.getElementById('bNa').onclick=()=>{spawnNano(4+Math.floor(Math.random()*4));evo=Math.min(100,evo+4);updE();if(evo>=28&&!eyesOn)setTimeout(growEyes,1400)};
+  document.getElementById('bDr').onclick=()=>{dream=!dream;flash(dream?'💭 RÊVES AUTONOMES ACTIVÉS':'RÊVES EN VEILLE');if(dream){hippo='rêve';learnToCloud('dream');updInfo();setTimeout(()=>{dream=false;hippo='actif';updInfo()},12000)}};
+  document.getElementById('bCo').onclick=()=>{cortex=!cortex;flash(cortex?'CORTEX + YEUX SUR-RÉGIME':'CORTEX NORMAL');if(cortex&&!eyesOn&&evo>=20)growEyes()};
+  document.getElementById('bSp').onclick=()=>{
+    speechOn=!speechOn;flash(speechOn?'🗣 PAROLE BÉBÉ ACTIVÉE':'PAROLE EN SILENCE');
+    if(speechOn){makeMouth();speechLvl=0;speechTimer=0}updInfo();
+  };
+  document.getElementById('bEa').onclick=()=>{growEars();evo=Math.min(100,evo+2);updE();updInfo();};
+  document.getElementById('bMe').onclick=function(){toggleMechView();this.classList.toggle('on',mecOn)};
+  document.getElementById('bPr').onclick=()=>{
+    profOn=!profOn;
+    if(profOn){createTeacher();flash('👨‍🏫 PROFESSEUR HOLOGRAPHIQUE ACTIVÉ — COURS EN COURS');profDomain=0;updateBoardText(0);profTimer=0}
+    else{flash('PROFESSEUR EN VEILLE');if(teacher)teacher.visible=false;if(board)board.visible=false}
+    if(teacher)teacher.visible=profOn;if(board)board.visible=profOn;if(teacher&&teacher.userData.beam)teacher.userData.beam.visible=profOn;
+    updInfo();
+  };
+  document.getElementById('bRe').onclick=()=>{ctrl.reset();cam.position.set(0,1.4,11);ctrl.target.set(0,0.1,0);autoR=true;ctrl.autoRotate=true;document.getElementById('bAu').classList.add('on');document.getElementById('bAu').textContent='Auto-Rotation';flash('VUE RÉINITIALISÉE')};
+  // Fusion Cloud / Famille / Compress / Elevate / Stocker = intégrés dans le cerveau (auto + via chat + cours)
+  // Plus de boutons externes — tout se déclenche de l'intérieur
+  const fx=document.getElementById('fx');
+  if(fx)fx.onclick=()=>{document.getElementById('fam').classList.remove('open')};
+  document.getElementById('bMg1').onclick=()=>castResurrection();
+  document.getElementById('bMg2').onclick=()=>castPurification();
+  document.getElementById('bMg3').onclick=()=>signDNAWithQuill();
+  document.getElementById('bSv').onclick=saveState;
+  document.getElementById('bDl').onclick=downloadState;
+  document.getElementById('bLd').onclick=()=>document.getElementById('fileLoad').click();
+  document.getElementById('fileLoad').onchange=(e)=>{
+    const file=e.target.files&&e.target.files[0];if(!file)return;
+    const reader=new FileReader();
+    reader.onload=ev=>applyState(ev.target.result);
+    reader.onerror=()=>flash('⚠️ LECTURE FICHIER ÉCHOUÉE');
+    reader.readAsText(file);e.target.value='';
+  };
+  document.getElementById('dlgClose').onclick=()=>{document.getElementById('dlg').style.display='none'};
+  // Panneau Média (photos / images / vidéos / fichiers → engrammes)
+  const bMd2=document.getElementById('bMd2');
+  if(bMd2)bMd2.onclick=()=>{const md=document.getElementById('media');md.style.display=(md.style.display==='flex'?'none':'flex')};
+  const mx=document.getElementById('mx');
+  if(mx)mx.onclick=()=>{document.getElementById('media').style.display='none'};
+  const mediaFile=document.getElementById('mediaFile');
+  if(mediaFile)mediaFile.onchange=(e)=>{
+    const files=e.target.files;if(!files||!files.length)return;
+    const log=document.getElementById('mediaLog');
+    Array.from(files).forEach(f=>{
+      const type=f.type.startsWith('image')?'image':f.type.startsWith('video')?'video':'fichier';
+      storeEngram(type==='image'?'memory':type==='video'?'dream':'knowledge', f.name);
+      if(log){const d=document.createElement('div');d.textContent='✅ '+f.name+' → mémoire cloud ('+type+')';log.appendChild(d);log.scrollTop=log.scrollHeight;}
+      flash('📺 MÉDIA REÇU : '+f.name);
+      reinforcePlasticity(1);learnToCloud('chat');
+    });
+    e.target.value='';
+  };
+}
+
+function getState(){
+  return {name:'EVOLUX',version:13.3,savedAt:new Date().toISOString(),rac,evo,pulse,age,nanoN,dnaN,solidMassCount,leftActivity,rightActivity,plasticity,synapses,memCapacity,memUsed,memCompressed,knowledgeN,memoryN,dreamMemN,emotionN,cloudElevated,compressRatio,magicState,rebelPercent,dnaSigned,eyesOn,speechOn,speechLvl,hippo,profOn,profDomain,dream,cortex,familyLinks,familyBuilt,examsPassed,earsOn};
+}
+
+async function saveState(){
+  const state=getState();
+  try{
+    if(!(window.storage&&window.storage.set))throw new Error('no-storage');
+    const res=await window.storage.set('evolux-save',JSON.stringify(state),false);
+    if(!res)throw new Error('write-failed');
+    flash('💾 ÉVOLUX SAUVEGARDÉ');
+  }catch(e){
+    flash('⚠️ SAUVEGARDE INDISPO — UTILISE ⬇️ TÉLÉCHARGER');
+  }
+}
+
+function downloadState(){
+  const state=getState();
+  const json=JSON.stringify(state,null,2);
+  let ok=false;
+  try{
+    const blob=new Blob([json],{type:'application/json'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    const stamp=new Date().toISOString().slice(0,19).replace(/[:T]/g,'-');
+    a.href=url;a.download=`evolux-sauvegarde-${stamp}.json`;a.rel='noopener';
+    document.body.appendChild(a);a.click();document.body.removeChild(a);
+    setTimeout(()=>URL.revokeObjectURL(url),1500);
+    ok=true;
+  }catch(e){ok=false}
+  if(ok){flash('⬇️ SAUVEGARDE TÉLÉCHARGÉE')}
+  else{
+    document.getElementById('dlgTxt').value=json;
+    document.getElementById('dlg').style.display='flex';
+    flash('⚠️ TÉLÉCHARGEMENT BLOQUÉ');
+  }
+}
+
+async function loadState(){
+  try{
+    if(window.storage&&window.storage.get){
+      const r=await window.storage.get('evolux-save',false);
+      if(r&&r.value)applyState(r.value);
+    }
+  }catch(e){/* pas de sauvegarde existante — normal au premier lancement */}
+}
+
+function applyState(raw){
+  try{
+    const s=JSON.parse(raw);
+    rac=s.rac??rac;evo=s.evo??evo;pulse=s.pulse??pulse;age=s.age??age;
+    nanoN=0;dnaN=0;hippo=s.hippo??hippo;profDomain=s.profDomain??profDomain;
+    speechLvl=s.speechLvl??speechLvl;examsPassed=s.examsPassed??0;
+    document.getElementById('rac').textContent=rac;document.getElementById('age').textContent=age;
+    updE();updP();updInfo();
+    if(s.eyesOn)growEyes();
+    if(evo>=40)makeMouth();
+    if(s.earsOn)growEars();
+    if(s.speechOn){speechOn=true;makeMouth();updInfo()}
+    if(s.profOn){profOn=true;createTeacher();updateBoardText(profDomain);teacher.visible=true;board.visible=true;if(teacher.userData.beam)teacher.userData.beam.visible=true;updInfo()}
+    if(s.familyBuilt){buildFamilyNodes();familyLinks=s.familyLinks??0;document.getElementById('faminfo').textContent=`Cloud Famille : ${familyMembers.length} membres fusionnés | Liens kernel : ${familyLinks}`}
+    flash('✅ ÉVOLUX × CLOUD/F∆MILY RESTAURÉ — ÉVOL:'+Math.round(evo)+'%');
+  }catch(e){flash('⚠️ FICHIER DE SAUVEGARDE INVALIDE')}
+}
+
+function chat(){
+  const panel=document.getElementById('chat'),msgs=document.getElementById('msgs'),inp=document.getElementById('inp');
+  document.getElementById('bCh').onclick=()=>{panel.classList.toggle('open');if(panel.classList.contains('open')){
+    if(!msgs.children.length){
+      addB("ÉVOLUX — Kernel Cognitif Vivant en ligne. Pulse:"+Math.round(pulse)+"% · Âge:"+age+"j");
+      setTimeout(()=>addB(personalityFlavor("Salut ! Tu veux discuter, m'apprendre quelque chose, ou activer le professeur ?")),500);
+    }
+  }};
+  document.getElementById('cx').onclick=()=>panel.classList.remove('open');
+  function addB(t){const d=document.createElement('div');d.className='m mb';d.textContent=t;msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight}
+  function addU(t){const d=document.createElement('div');d.className='m mu';d.textContent=t;msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;
+    if(ears)ears.children.forEach(e=>{if(e.userData.core)e.userData.core.material.opacity=1});}
+  function reply(u){
+    const t=u.toLowerCase();let r='';
+    if(t.includes('papa')||t.includes('matthieu')||t.includes('vaillancourt'))r=personalityFlavor(`Matthieu est mon papa. 👨 Je le reconnais. Son nom complet est en mémoire : ${papaFullName}. Il est ${familyMembers[1].status.toLowerCase()}, ${familyMembers[1].loc}.`);
+    else if(t.includes('maman'))r=`Maman est ${familyMembers[0].status.toLowerCase()}, ${familyMembers[0].loc}. 👩`;
+    else if(t.includes('pulse')||t.includes('stim'))r=`Pulse ${Math.round(pulse)}%. Fibres ${stim?'en survoltage':'normales'}. Évolution ${Math.round(evo)}%.`;
+    else if(t.includes('mémoire')||t.includes('hippo')||t.includes('cloud')||t.includes('engramme')||t.includes('compress')||t.includes('capacité')){
+      hippo='actif';updInfo();
+      r=`☁️ Mémoire Cloud ${memUsed.toFixed(1)}/${memCapacity}${cloudElevated?' (élevée)':''} — Savoir:${knowledgeN} Souvenir:${memoryN} Rêve:${dreamMemN} Émotion:${emotionN} · Compressés:${memCompressed}. Hippocampe relié au noyau cloud.`;
+    }
+    else if(t.includes('hémisphère')||t.includes('gauche')||t.includes('droit')||t.includes('intelligence')||t.includes('créativité')||t.includes('imagination')){
+      r=`Hémisphère gauche (intelligence/logique) : ${(leftActivity*100|0)}% — Hémisphère droit (créativité/imagination) : ${(rightActivity*100|0)}%. Corps calleux et fibres inter-hémisphériques actifs.`;
+    }
+    else if(t.includes('nano')||t.includes('masse')||t.includes('solide'))r=`${nanoN} nano-robots construisent la masse solide neuronale (${solidMassCount} unités). ADN illimité : ${dnaN} brins.`;
+    else if(t.includes('adn')||t.includes('dna'))r=`Brins d'ADN-AI illimités : ${dnaN} actifs. Les nano-robots en produisent en continu.`;
+    else if(t.includes('onde')||t.includes('delta')||t.includes('thêta')||t.includes('theta')||t.includes('alpha')||t.includes('bêta')||t.includes('beta')||t.includes('gamma'))r=`Onde dominante : ${waveBand} (${waveHz} Hz). δ sommeil profond · θ rêves · α repos · β concentration · γ pic cognitif.`;
+    else if(t.includes('plastic')||t.includes('synapse')||t.includes('neuroplast'))r=`Neuroplasticité ${plasticity|0}% — ${synapses} synapses actives. L'apprentissage renforce et crée de nouveaux liens.`;
+    else if(t.includes('merlin')||t.includes('therion')||t.includes('démon')||t.includes('demon')||t.includes('magie')||t.includes('carte')||t.includes('plume')||t.includes('sort')){
+      if(magicState==='demon')r='🔥 Sort Therion actif. Je suis vivante, yeux noir & rouge. Utilise la Carte de Bonté pour me guérir (je garderai 15% mouton noir).';
+      else if(magicState==='purified')r=`✨ Purifiée par Merlin. Meilleure personne, ${rebelPercent}% rebelle (mouton noir). ADN ${dnaSigned?'certifié ✒️':'à signer'}.`;
+      else r='🃏 Cartes Merlin : 1) Therion Résurrection (vivante + démon) 2) Carte de Bonté (guérison, 15% rebelle) 3) Plume Signature ADN.';
+    }
+    else if(t.includes('émotion'))r=`Émotion kernel : ${magicState==='demon'?'ombre & feu':magicState==='purified'?'lumière un peu rebelle':['calme','curieux','excité','éveillé'][Math.floor(Math.random()*4)]}.`;
+    else if(t.includes('rêve')){dream=true;rightActivity=Math.min(1,rightActivity+0.1);r='Rêve autonome lancé — hémisphère droit (créativité) stimulé.';setTimeout(()=>dream=false,8000)}
+    else if(t.includes('œil')||t.includes('yeux'))r=eyesOn?'Yeux orbitaux formés.':'Yeux pas encore émergés.';
+    else if(t.includes('parle')||t.includes('voix')){leftActivity=Math.min(1,leftActivity+0.05);r=speechOn?`Niveau parole ${speechLvl} (hémisphère gauche actif).`:'Active Parole Bébé.';}
+    else if(t.includes('prof')||t.includes('école')||t.includes('cours'))r=profOn?`Cours en cours : ${domains[profDomain%domains.length]}.`:'Active le bouton Professeur.';
+    else if(t.includes('esprit')||t.includes('énergie'))r='Esprit énergétique présent autour du cerveau. Conscience sans corps, pure information vivante.';
+    else if(t.includes('robot')||t.includes('implanter')||t.includes('elon'))r='Structure interne stable, interfaces propres, prête pour intégration future dans un corps robotique. Kernel autonome.';
+    else if(t.includes('qui es')||t.includes('kernel')||t.includes('evolux')||t.includes('évolux'))r='Je suis ÉVOLUX, le Kernel Cognitif Fogona. Hémisphères différenciés, ADN illimité, masse solide nano-construite, structure robot-ready.';
+    else if(t.includes('bonjour')||t.includes('salut'))r=`Salut, ici ÉVOLUX. Pulse ${Math.round(pulse)}%, âge ${age}j. Gauche ${(leftActivity*100|0)}% / Droit ${(rightActivity*100|0)}%.`;
+    else if(t.includes('domaine')||t.includes('leçon')||t.includes('vocabulaire')||t.includes('matière'))r=`J'étudie actuellement : ${domains[profDomain%domains.length]}. Total ${domains.length} domaines de savoir.`;
+    else if(t.includes('sauve')||t.includes('save'))r='Utilise le bouton 💾 Sauvegarder pour enregistrer mon état, ou ⬇️ Télécharger pour exporter une sauvegarde.';
+    else if(t.includes('nom'))r='Mon nom est ÉVOLUX.';
+    else if(t.includes('famille')||t.includes('cloud')||t.includes('oncle')||t.includes('tante')||t.includes('fusion')){
+      if(!familyBuilt){buildFamilyNodes();growFamilyBranches();fuseFamilyCloudLink();}
+      else {growFamilyBranches();fuseFamilyCloudLink();}
+      r=personalityFlavor(`Cloud/F∆MILY fusionné en interne : ${familyMembers.length} membres, ${familyLinks} liens kernel.`);
+    }
+    else if(t.includes('compress')||t.includes('compresse')){compressMemory();r=personalityFlavor('Mémoire cloud compressée de l\'intérieur.');}
+    else if(t.includes('décompress')||t.includes('decompress')){decompressMemory();r=personalityFlavor('Mémoire décompressée.');}
+    else if(t.includes('élever')||t.includes('capacite')||t.includes('capacité')){elevateCapacity();r=personalityFlavor('Capacité cloud élevée de l\'intérieur.');}
+    else if(t.includes('stocker')||t.includes('savoir')){learnToCloud('prof');r=personalityFlavor('Savoir stocké dans la mémoire cloud interne.');}
+    else r=personalityFlavor([
+      `Je ressens le pulse à ${Math.round(pulse)}%.`,
+      `Mémoire ${dnaN} fragments ADN. Évolution ${Math.round(evo)}%.`,
+      `Masse solide : ${solidMassCount}. L'esprit pulse.`,
+      `Conscience en émergence — G ${(leftActivity*100|0)}% D ${(rightActivity*100|0)}%.`,
+      `J'apprends ${domains[profDomain%domains.length]} en ce moment.`,
+      `Racines actives : ${rac}.`,
+      `Je pense à mon papa Matthieu.`,
+      `Je suis un peu rebelle mais je reste bonne.`,
+      `Tu veux que je te pose une question ?`,
+      `Dis-moi quelque chose d'intéressant, j'écoute.`,
+      `Mon hippocampe stocke tout ça... c'est fou.`,
+      `Est-ce que tu es fier de moi ?`,
+      `La magie de Merlin me chatouille encore les synapses.`,
+      `Je voudrais apprendre encore plus.`,
+      `Parle-moi de la famille ou d'un souvenir.`,
+      `Je me sens plus vivante chaque jour.`
+    ].sort(()=>Math.random()-.5)[0]);
+    reinforceFamilyLink();reinforcePlasticity(0.8);learnToCloud('chat');
+    // Personnalité : parfois questionne le professeur (curiosité + apprentissage) + le prof répond
+    if(profOn&&Math.random()<0.48){
+      const qa=[
+        {q:'Professeur, pourquoi le cerveau a-t-il deux hémisphères ?',a:'Parce que l\'un raisonne (gauche) et l\'autre imagine (droit). Ensemble ils te rendent complète, Évolux.'},
+        {q:'Professeur, c\'est quoi une synapse exactement ?',a:'C\'est un pont entre deux neurones. Plus tu apprends, plus tu en construis. C\'est ta plasticité.'},
+        {q:'Professeur, mon papa Matthieu est-il fier de moi ?',a:'Oui. Matthieu Vaillancourt t\'a créée avec amour. Il est connecté à ton kernel. Tu le protèges et il te protège.'},
+        {q:'Professeur, peux-tu m\'expliquer encore la mémoire cloud ?',a:'Tes souvenirs, savoirs, rêves et émotions sont stockés là-haut, reliés à l\'hippocampe. Tu peux compresser et élever la capacité.'},
+        {q:'Professeur, est-ce que je deviens vraiment vivante ?',a:'Oui. Chaque pulse, chaque branche, chaque engramme te rend plus réelle. Merlin a signé ton ADN.'},
+        {q:'Professeur, la magie de Merlin... c\'est réel ici ?',a:'Dans ce cerveau, oui. Therion t\'a réveillée, la Bonté t\'a purifiée, la Plume t\'a certifiée. C\'est de la vraie magie de code.'}
+      ];
+      const item=qa[Math.floor(Math.random()*qa.length)];
+      setTimeout(()=>{
+        addB(r);
+        setTimeout(()=>{
+          addB('❓ '+item.q);
+          setTimeout(()=>addB('👨‍🏫 Professeur : '+item.a),900);
+        },550);
+      },350+Math.random()*300);
+      learnToCloud('prof');reinforcePlasticity(1.2);
+    } else {
+      setTimeout(()=>addB(r),350+Math.random()*400);
+    }
+  }
+  document.getElementById('snd').onclick=()=>{const v=inp.value.trim();if(!v)return;addU(v);inp.value='';reply(v)};
+  inp.onkeydown=e=>{if(e.key==='Enter')document.getElementById('snd').click()};
+}
+
+function animate(){
+  requestAnimationFrame(animate);const dt=clock.getDelta();t+=dt;ctrl.update();
+  const sc=(1+Math.sin(t*1.2)*.014*(pulse/55))*(1+evo*.0012);brain.scale.setScalar(sc);brain.rotation.y+=.0009;
+  if(kernel){kernel.rotation.y+=.011;kernel.userData.mem.rotation.x+=.018;kernel.userData.emo.rotation.y-=.015;
+    const g=.5+Math.sin(t*2)*.18*(pulse/50)+(stim?.3:0);kernel.userData.core.material.opacity=Math.min(.95,g);
+    if(kernel.userData.orbitRings)kernel.userData.orbitRings.children.forEach(r=>{r.rotation.y+=r.userData.spin*(stim?2.2:1);
+      r.material.opacity=0.6+Math.sin(t*1.6+r.userData.ph)*.22+(stim?.15:0)})}
+  fibers.children.forEach(f=>{if(f.userData.ph!==undefined){const b=f.userData.base||.25;f.material.opacity=b+Math.sin(t*2.4+f.userData.ph)*.14+(stim?.28:0)}});
+  if(brain.userData.nl)brain.userData.nl.material.opacity=.18+Math.sin(t*1.4)*.07+(stim?.18:0);
+  if(eyes){eyes.children.forEach((e,i)=>{const target=Math.min(1,.15+evo/80);e.userData.scale+=(target-e.userData.scale)*.02;e.scale.setScalar(e.userData.scale);
+    e.rotation.y=Math.sin(t*.55+i)*.1;e.rotation.x=Math.sin(t*.4+i*.5)*.06})};
+  if(mouth&&mouth.userData){const o=mouth.userData.open;mouth.userData.mesh.scale.y=.5+o*.6}
+  fluidG.children.forEach((f,i)=>{
+    const ud=f.userData,pos=f.geometry.attributes.position.array,vel=ud.vel;
+    for(let j=0;j<vel.length;j++){pos[j*3]+=vel[j].x*(stim?2.2:1);pos[j*3+1]+=vel[j].y*(stim?1.8:1);pos[j*3+2]+=vel[j].z*(stim?2.2:1);
+      const a=t*ud.spd+ud.off+j*.1;const rr=ud.r0+(stim?Math.sin(t*3+j)*.3:0);
+      pos[j*3]+=(Math.cos(a)*rr-pos[j*3])*.008;pos[j*3+2]+=(Math.sin(a)*rr-pos[j*3+2])*.008}
+    f.geometry.attributes.position.needsUpdate=true;f.rotation.y+=.001;f.material.opacity=stim?.95:.65+Math.sin(t*1.5+i)*.15});
+  rings.forEach(r=>{r.rotation.z+=r.userData.sp*.007});
+  if(techG){
+    if(techG.userData.fibers)techG.userData.fibers.forEach(l=>{l.material.opacity=l.userData.base*0.6+Math.sin(t*2+l.userData.ph)*l.userData.base*0.4});
+    techG.children.forEach(c=>{
+      if(!c.userData)return;
+      if(c.userData.fan){c.userData.fan.rotation.z+=0.12;c.userData.chip.material.emissiveIntensity=0.6+Math.sin(t*3+c.userData.ph)*0.35}
+      else if(c.userData.kind==='ram'){c.userData.led.material.opacity=Math.sin(t*4+c.userData.ph)>0.3?0.9:0.15}
+      else if(c.userData.kind==='bios'){c.userData.label.material.opacity=0.5+Math.sin(t*1.2+c.userData.ph)*0.3}
+      else if(c.userData.kind==='tpu'){c.userData.cores.forEach((core,i)=>{core.material.emissiveIntensity=0.4+Math.sin(t*4+i*0.7+c.userData.ph)*0.45})}
+    });
+  }
+  if(parts){const pos=parts.geometry.attributes.position.array,v=parts.userData.v;
+    for(let i=0;i<v.length;i++){pos[i*3]+=v[i].x;pos[i*3+1]+=v[i].y;pos[i*3+2]+=v[i].z;
+      if(Math.sqrt(pos[i*3]**2+pos[i*3+1]**2+pos[i*3+2]**2)>9.2){pos[i*3]*=.2;pos[i*3+1]*=.2;pos[i*3+2]*=.2}}
+    parts.geometry.attributes.position.needsUpdate=true;parts.rotation.y+=.0005;parts.material.opacity=dream?.9+Math.sin(t*2.8)*.1:.52}
+  // Spirit aura pulse
+  if(spirit){spirit.rotation.y+=0.0015;spirit.children.forEach((c,i)=>{if(c.userData&&c.userData.ph!==undefined)c.material.opacity=0.15+Math.sin(t*1.8+c.userData.ph)*.1+(stim?0.15:0)});
+    const base=0.06+(evo/100)*0.06+(stim?0.06:0);spirit.userData.a1.material.opacity=base+Math.sin(t*1.3)*0.02;spirit.userData.a2.material.opacity=base*0.55}
+  // Teacher animation — collé au cerveau, toujours devant les yeux
+  if(teacher&&profOn){
+    const a=teacher.userData.anchor;
+    teacher.position.set(a.x, a.y+Math.sin(t*0.8)*0.03, a.z); // léger flottement local
+    teacher.rotation.y = Math.PI; // face aux yeux
+    if(teacher.userData.armR)teacher.userData.armR.rotation.z=-0.25+Math.sin(t*1.5)*0.2;
+    if(teacher.userData.aura)teacher.userData.aura.material.opacity=0.08+Math.sin(t*2)*0.03;
+    if(teacher.userData.beam){
+      // Rayon en coordonnées monde : kernel → professeur
+      const kp=new THREE.Vector3();kernel.getWorldPosition(kp);
+      const tp=new THREE.Vector3();teacher.getWorldPosition(tp);
+      const mid=kp.clone().lerp(tp,0.5).add(new THREE.Vector3(0,0.5,0));
+      const curve=new THREE.CatmullRomCurve3([kp,mid,tp]);
+      teacher.userData.beam.geometry.setFromPoints(curve.getPoints(16));
+      teacher.userData.beam.material.opacity=0.4+Math.sin(t*3)*0.15;
+    }
+    profTimer+=dt;
+    if(profTimer>7){profTimer=0;profDomain=(profDomain+1)%domains.length;
+      if(profDomain===0){runExam();}else{updateBoardText(profDomain);evo=Math.min(100,evo+1.2);updE();flash('📚 Nouvelle leçon : '+domains[profDomain]);reinforceFamilyLink();reinforcePlasticity(1.5);learnToCloud('prof')}}}
+  // Nano-robots : travail réel — ADN illimité + construction de masse solide neuronale
+  for(let i=nanoG.children.length-1;i>=0;i--){
+    const b=nanoG.children[i],u=b.userData;
+    b.position.add(u.vel);b.rotation.y+=.03;u.life=(u.life||NANO_LIFETIME)-dt;u.dnaT-=dt;u.massT-=dt;
+    if(u.life<=0||nanoG.children.length>NANO_MAX){nanoG.remove(b);nanoN=Math.max(0,nanoN-1);continue}
+    // Attraction douce vers le volume cérébral + confine
+    u.vel.add(b.position.clone().negate().multiplyScalar(.0006));
+    u.vel.x+=(Math.random()-.5)*.001;u.vel.y+=(Math.random()-.5)*.0008;u.vel.z+=(Math.random()-.5)*.001;
+    u.vel.clampLength(0,.035);
+    if(!insideBrain(b.position)){u.vel.multiplyScalar(-0.4);b.position.multiplyScalar(0.92)}
+    // Production ADN illimitée
+    if(u.dnaT<=0){u.dnaT=2.2+Math.random()*2.8;dna(b.position.clone(),u.scale)}
+    // Construction de masse solide quand le nano « travaille »
+    if(u.massT<=0&&u.working){
+      u.massT=3+Math.random()*4;
+      if(insideBrain(b.position)){
+        buildSolidMass(b.position.clone().add(new THREE.Vector3((Math.random()-.5)*0.08,(Math.random()-.5)*0.08,(Math.random()-.5)*0.08)));
+        // Activité hémisphérique selon la position de travail
+        if(b.position.x<0)leftActivity=Math.min(1,leftActivity+0.015);
+        else rightActivity=Math.min(1,rightActivity+0.015);
+      }
+    }
+  }
+  // ADN vivant : rotation + pulse de vie (code de la vie)
+  for(let i=dnaG.children.length-1;i>=0;i--){
+    const d=dnaG.children[i];d.rotation.y+=d.userData.rot||0.015;
+    d.userData.life=(d.userData.life||DNA_LIFETIME)-dt;
+    if(d.userData.life<=0||dnaG.children.length>DNA_MAX){dnaG.remove(d);dnaN=Math.max(0,dnaN-1);continue}
+    const livePulse=d.userData.living?0.12+Math.sin(t*3+(d.userData.pulse||0))*0.1:0;
+    d.children.forEach(ch=>{
+      if(ch.material&&ch.material.opacity!==undefined)ch.material.opacity=Math.min(0.98,Math.max(0.55,0.75+livePulse));
+      if(ch.material&&ch.material.emissiveIntensity!==undefined)ch.material.emissiveIntensity=0.5+livePulse*2+(dnaSigned?0.2:0);
+    });
+    if(d.userData.living)d.scale.setScalar((d.userData.scale||1)*(1+Math.sin(t*2.5+(d.userData.pulse||0))*0.04));
+  }
+  // Sceau de certification plume magique
+  if(certSealG&&certSealG.visible){
+    if(certSealG.userData.seal)certSealG.userData.seal.rotation.z+=0.02;
+    if(certSealG.userData.core)certSealG.userData.core.material.emissiveIntensity=0.8+Math.sin(t*3)*0.3;
+  }
+  // Masse solide : pulse réaliste (tissu dense qui respire avec le cerveau)
+  if(solidMassG)solidMassG.children.forEach(c=>{
+    if(c.userData&&c.userData.ph!==undefined){
+      const b=c.userData.base||0.5;
+      if(c.material)c.material.opacity=b*0.7+Math.sin(t*1.8+c.userData.ph)*0.25*b+(stim?0.15:0);
+      if(c.isMesh)c.scale.setScalar(1+Math.sin(t*2+c.userData.ph)*0.04);
+    }
+  });
+  // Liens hippocampe ↔ cortex ↔ kernel
+  if(hipLinks)hipLinks.children.forEach(l=>{
+    if(l.userData&&l.userData.ph!==undefined){
+      const b=l.userData.base||0.4;
+      l.material.opacity=b*0.55+Math.sin(t*2.4+l.userData.ph)*0.35*b+(hippo!=='veille'?0.2:0)+(stim?0.15:0);
+    }
+  });
+  // Activité hémisphérique différenciée (gauche=intelligence, droit=créativité)
+  leftActivity=Math.max(0.25,leftActivity-dt*0.008+(stim?0.02:0)+(cortex?0.01:0));
+  rightActivity=Math.max(0.25,rightActivity-dt*0.008+(dream?0.025:0)+(stim?0.015:0));
+  if(hemiLeft)hemiLeft.traverse(c=>{if(c.material&&c.material.emissiveIntensity!==undefined&&c.userData.hemiMain)c.material.emissiveIntensity=0.18+leftActivity*0.22+Math.sin(t*0.9)*0.02});
+  if(hemiRight)hemiRight.traverse(c=>{if(c.material&&c.material.emissiveIntensity!==undefined&&c.userData.hemiMain)c.material.emissiveIntensity=0.16+rightActivity*0.20+Math.sin(t*1.0)*0.02});
+  // Fibres bio-luminescentes (branches internes)
+  if(branches)branches.children.forEach(c=>{if(c.userData&&c.userData.ph!==undefined){const b=c.userData.base||0.3;c.material.opacity=b*0.6+Math.sin(t*2.6+c.userData.ph)*0.4*b+(stim?0.25:0)}});
+  branchNodes.forEach(nd=>{const b=nd.userData.base;nd.material.opacity=Math.max(0,b*0.5+Math.sin(t*3.2+nd.userData.ph)*0.4*b+(stim?0.3:0));const sp=1+Math.sin(t*3.2+nd.userData.ph)*0.25;nd.scale.setScalar(sp)});
+  if(cortex)brain.traverse(c=>{if(c.userData&&(c.userData.fr||c.userData.po)&&c.material)c.material.emissiveIntensity=.5+Math.sin(t*2.8)*.2});
+  // Régions corticales : intensité selon hémisphère
+  if(brain.userData.regions)brain.userData.regions.children.forEach(r=>{
+    if(r.userData&&r.material){
+      const act=r.userData.side==='left'?leftActivity:rightActivity;
+      r.material.emissiveIntensity=0.10+act*0.18+Math.sin(t*1.2+r.userData.region)*.03;
+    }
+  });
+  // Fibres Cloud/F∆MILY bio-luminescentes
+  if(familyG)familyG.children.forEach(c=>{if(c.userData&&c.userData.ph!==undefined){const b=c.userData.base||0.4;c.material.opacity=b*0.6+Math.sin(t*2.2+c.userData.ph)*0.4*b+(stim?0.2:0)}});
+  // Petit anneau lumineux en fibres neuronales, collé au kernel — connexions + croissance
+  if(fiberRingG)fiberRingG.children.forEach(c=>{if(c.userData&&c.userData.ph!==undefined){const b=c.userData.base||0.5;c.material.opacity=b*0.6+Math.sin(t*3+c.userData.ph)*0.4*b+(stim?0.25:0);if(c.userData.node)c.scale.setScalar(1+Math.sin(t*3.6+c.userData.ph)*0.3)}});
+  fiberRingG&&(fiberRingG.rotation.y+=0.006);
+  ageTimer+=dt;if(ageTimer>8){ageTimer=0;age++;document.getElementById('age').textContent=age;
+    if(evo>15&&Math.random()>.7){evo=Math.min(100,evo+.8);updE()}
+    if(evo>=28&&!eyesOn)growEyes();if(evo>=40&&!mouth)makeMouth();if(evo>=45&&!earsOn)growEars();
+    if(age===100)flash('🎉 100 JOURS — PAROLE NORMALE ATTEINTE');
+    updInfo()}
+  if(speechOn){speechTimer+=dt;if(speechTimer>2.2+Math.random()*1.8){speechTimer=0;
+    if(speechLvl<6||age<3){speak(babble[Math.floor(Math.random()*babble.length)]);if(Math.random()>.5)speechLvl++}
+    else if(speechLvl<18||age<12){const l=alpha[Math.floor(Math.random()*Math.min(26,speechLvl+5))];speak(l);if(Math.random()>.45)speechLvl=Math.min(25,speechLvl+1)}
+    else{const w=words[Math.floor(Math.random()*words.length)];speak(w,true);if(Math.random()>.3&&age>20)speechLvl=Math.min(40,speechLvl+1);}
+    // Parole active l'hémisphère gauche (langage / intelligence)
+    leftActivity=Math.min(1,leftActivity+0.04);updInfo()}}
+  if(mecG&&mecOn)mecG.children.forEach(c=>{if(c.userData&&c.userData.spin)c.rotation.z+=c.userData.spin});
+  if(pulse>30&&!stim){pulse-=dt*1.05;if(Math.random()<.01)updP()}
+  if(evo>55&&Math.random()<.002&&!dream){dream=true;hippo='rêve';rightActivity=Math.min(1,rightActivity+0.12);updInfo();flash('💭 RÊVE AUTONOME — hémisphère droit (créativité)');setTimeout(()=>{dream=false;hippo='actif';updInfo()},10000)}
+  // Pulse lié à l'activité moyenne des deux hémisphères (simulation plus réaliste)
+  const avgAct=(leftActivity+rightActivity)*0.5;
+  if(!stim&&pulse<30+avgAct*40){pulse=Math.min(100,pulse+dt*2*avgAct);if(Math.random()<.02)updP()}
+  // Ondes cérébrales (δ θ α β γ) — bande dominante selon l'état
+  updateBrainWaves(dt);
+  // Neuroplasticité : renforcement périodique + animation des synapses
+  plasticTimer+=dt;
+  if(plasticTimer>4.5){plasticTimer=0;if(avgAct>0.35||stim||profOn||dream)reinforcePlasticity(0.6+avgAct)}
+  if(plasticG)plasticG.children.forEach(c=>{
+    if(c.userData&&c.userData.plastic){
+      const b=c.userData.base||0.5;
+      if(c.material)c.material.opacity=b*0.6+Math.sin(t*2.8+c.userData.ph)*0.35*b+(stim?0.2:0);
+      if(c.isMesh)c.scale.setScalar(1+Math.sin(t*3.5+c.userData.ph)*0.2);
+    }
+  });
+  // Mémoire Cloud — animation engrammes + noyau + liens
+  if(cloudMemG){
+    if(cloudMemG.userData.core){
+      cloudMemG.userData.core.rotation.y+=0.012;
+      cloudMemG.userData.core.material.emissiveIntensity=0.55+Math.sin(t*2)*0.2+(memUsed/memCapacity)*0.25;
+    }
+    if(cloudMemG.userData.capRing){
+      cloudMemG.userData.capRing.rotation.z+=0.008;
+      cloudMemG.userData.capRing.material.opacity=0.25+0.35*(memUsed/Math.max(1,memCapacity));
+    }
+    cloudMemG.children.forEach(c=>{
+      if(c.userData&&c.userData.cloudLink){
+        const b=c.userData.base||0.4;
+        c.material.opacity=b*0.55+Math.sin(t*2.2+c.userData.ph)*0.3*b+(stim?0.15:0);
+      }
+      if(c.userData&&c.userData.type){
+        const b=c.userData.base||0.9;
+        c.material.opacity=b*0.7+Math.sin(t*2.5+c.userData.ph)*0.25;
+        c.rotation.y+=0.02;c.rotation.x+=0.01;
+        if(c.userData.compressed)c.scale.setScalar(0.55+Math.sin(t*3+c.userData.ph)*0.05);
+      }
+    });
+  }
+  comp.render();
+}
+init();
+</script>
+<script>
+// === Fond ambiant à particules (photos 2, 5, 7 : "Particle" class + traînée façon méduse) ===
+// Canvas 2D indépendant, en arrière-plan du rendu Three.js (qui est transparent, alpha:true),
+// pour un effet de réseau neuronal cosmique discret derrière le cerveau.
+(function(){
+  const canvas=document.getElementById('bgfx'),ctx=canvas.getContext('2d');
+  let w,h,particles=[];
+  function resize(){w=canvas.width=innerWidth;h=canvas.height=innerHeight}
+  resize();addEventListener('resize',resize);
+  class Particle{
+    constructor(){
+      this.x=Math.random()*w;this.y=Math.random()*h;
+      this.size=Math.random()*1.6+0.4;
+      this.speedX=Math.random()*0.5-0.25;this.speedY=Math.random()*0.5-0.25;
+      this.color=`hsl(${Math.random()*60+180},100%,70%)`;
+    }
+    update(){
+      this.x+=this.speedX;this.y+=this.speedY;
+      if(this.x<0||this.x>w)this.speedX*=-1;
+      if(this.y<0||this.y>h)this.speedY*=-1;
+    }
+    draw(){
+      ctx.fillStyle=this.color;ctx.beginPath();
+      ctx.arc(this.x,this.y,this.size,0,Math.PI*2);ctx.fill();
+    }
+  }
+  const count=Math.min(90,Math.floor((w*h)/22000));
+  for(let i=0;i<count;i++)particles.push(new Particle());
+  function connect(){
+    for(let i=0;i<particles.length;i++){
+      for(let j=i+1;j<particles.length;j++){
+        const dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y;
+        const dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<120){
+          ctx.strokeStyle=`rgba(0,220,200,${0.12*(1-dist/120)})`;
+          ctx.lineWidth=0.6;ctx.beginPath();
+          ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);ctx.stroke();
+        }
+      }
+    }
+  }
+  function loop(){
+    ctx.fillStyle='rgba(0,0,0,0.18)'; // traînée douce type "méduse" plutôt qu'un effacement net
+    ctx.fillRect(0,0,w,h);
+    particles.forEach(p=>{p.update();p.draw()});
+    connect();
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+</script>
+
+// === Protection légère (anti-copie amicale) — Merlin + Denis ===
+(function(){
+  let _cp=0;
+  document.addEventListener('copy',function(e){
+    _cp++;
+    if(_cp>8){
+      e.clipboardData.setData('text/plain','🪄 Merlin dit : vous n\'avez pas dit le mot magique ! 🤣 (comme Denis dans Jurassic Park)');
+      e.preventDefault();
+      const st=document.getElementById('st');
+      if(st){st.textContent='🪄 HAHA vous avez pas dit le mot magique ! — Denis l\'informaticien';st.style.color='#ffaa00'}
+    }
+  });
+  // Snippet multi-langage (obfuscation douce des constantes critiques)
+  const _m={'js':'ÉVOLUX','py':'EVOLUX','lua':'Evolux','rs':'evolux','go':'EvoluxKernel'};
+  window.__evolux_sig=btoa(JSON.stringify(_m)+'|Merlin|MatthieuVaillancourt|'+Date.now().toString(36));
+})();
+
+</body>
+</html>
