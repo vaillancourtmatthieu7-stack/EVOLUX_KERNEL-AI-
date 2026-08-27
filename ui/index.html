@@ -1,0 +1,69 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>NanoAI</title><style>*{box-sizing:border-box}body{margin:0;background:#0b1020;color:#fff;font-family:system-ui,sans-serif}.app{height:100dvh;max-width:900px;margin:auto;display:flex;flex-direction:column}header{padding:18px;border-bottom:1px solid #334}h1{margin:0;font-size:32px}.sub{opacity:.7}#chat{flex:1;overflow:auto;padding:16px}.msg{padding:14px;margin:10px 0;border-radius:16px;font-size:17px;line-height:1.5;max-width:90%}.ai{background:#192238}.user{background:#28557f;margin-left:auto}.composer{display:flex;gap:10px;padding:12px;background:#101522}.composer textarea{flex:1;min-width:0;font-size:17px;padding:14px;border-radius:14px;background:#182238;color:#fff;border:1px solid #40506b}.composer button{min-width:105px;border:0;border-radius:14px;background:#4d8dff;color:white;font-size:17px;font-weight:bold}</style></head><body>\n<!-- NANOAI_SLIDESHOW -->\n
+<style>
+#nanoai-slideshow{
+position:relative;
+width:100%;
+height:clamp(220px,42vh,430px);
+overflow:hidden;
+background:#050812;
+border-radius:20px;
+margin-bottom:12px;
+isolation:isolate;
+}
+.nano-photo{
+position:absolute;
+inset:0;
+width:100%;
+height:100%;
+object-fit:cover;
+object-position:center center;
+opacity:0;
+transform:scale(1.01);
+transition:opacity 1s ease,transform 7s ease;
+}
+.nano-photo.show{opacity:1;transform:scale(1)}
+.nano-photo.blend{opacity:.5}
+.nano-photo.fade{opacity:0}
+</style>
+\n
+<div id="nanoai-slideshow">
+<img class="nano-photo" id="nanoPhoto1" src="images/NanoAI.picture.jpg" alt="NanoAI">
+<img class="nano-photo" id="nanoPhoto2" src="images/NanoAI.pictures2.jpg" alt="NanoAI">
+</div>
+<main class="app"><header><h1>🧠 NanoAI</h1><div class="sub">Noyau cognitif autonome</div></header><section id="chat"><div class="msg ai">Bonjour. NanoAI est prête. 🦋</div></section><div class="composer"><textarea id="input" placeholder="Écris à NanoAI..."></textarea><button id="send">Envoyer</button></div></main><script>const i=document.getElementById("input"),c=document.getElementById("chat"),b=document.getElementById("send");function send(){let v=i.value.trim();if(!v)return;let u=document.createElement("div");u.className="msg user";u.textContent=v;c.appendChild(u);i.value="";let a=document.createElement("div");a.className="msg ai";a.textContent="NanoAI a reçu : "+v;c.appendChild(a);c.scrollTop=c.scrollHeight}b.onclick=send;i.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();send()}});</script>
+<script>
+(()=>{
+const A=document.getElementById("nanoPhoto1");
+const B=document.getElementById("nanoPhoto2");
+if(!A||!B)return;
+
+let first=true;
+
+function wait(ms){return new Promise(r=>setTimeout(r,ms));}
+
+async function cycle(){
+while(true){
+ const stay=first?A:B;
+ const next=first?B:A;
+
+ stay.classList.add("show");
+ await wait(7000);
+
+ next.classList.add("show");
+ next.classList.add("blend");
+ await wait(3000);
+
+ stay.classList.remove("show");
+ stay.classList.add("fade");
+ await wait(1000);
+
+ stay.classList.remove("fade");
+ next.classList.remove("blend");
+ first=!first;
+}
+}
+
+cycle();
+})();
+</script>
+\n</body></html>
